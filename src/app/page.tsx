@@ -1,49 +1,132 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { SignInButton, Show, UserButton } from "@clerk/nextjs";
-import { Video, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { Bot, ArrowRight, CheckCircle2, Sparkles, Cpu } from "lucide-react";
 import { motion, useTransform, useScroll } from "framer-motion";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import UploadZone from "@/components/UploadZone";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import Pricing from "@/components/Pricing";
+import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="relative flex flex-col min-h-screen bg-transparent text-slate-50 selection:bg-indigo-500/30">
       <BackgroundEffects />
-      {/* Navigation */}
-      <header className="px-6 py-4 flex items-center justify-between border-b border-white/5 backdrop-blur-xl sticky top-0 z-50 bg-slate-950/50">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <Video className="text-white w-6 h-6" />
-          </div>
-          <span className="text-xl font-black tracking-tighter">ViralClip</span>
-        </div>
-        
-        <nav className="flex items-center gap-6">
-          <Link href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors hidden md:block">Features</Link>
-          <Link href="#pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors hidden md:block">Pricing</Link>
-          
-          <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
+      {/* Top Announcement Bar */}
+      <div className="h-10 bg-indigo-600/10 border-b border-indigo-500/20 flex items-center justify-center gap-4 overflow-hidden relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-500/5 to-transparent animate-[shimmer_3s_infinite]" />
+        <span className="text-[10px] font-black tracking-[0.3em] text-indigo-400 uppercase animate-pulse">
+          New: AI B-Roll Engine is now in Public Beta
+        </span>
+        <div className="h-4 w-[1px] bg-indigo-500/20" />
+        <Link href="/dashboard" className="text-[10px] font-bold text-white hover:text-indigo-400 transition-colors uppercase tracking-widest flex items-center gap-1">
+          Try it now <ArrowRight className="w-3 h-3" />
+        </Link>
+      </div>
 
+      {/* Navigation */}
+      <header className="px-6 py-4 flex items-center justify-between border-b border-white/5 backdrop-blur-3xl sticky top-0 z-50 bg-slate-950/80">
+        {/* Subtle Grid Pattern Overlay */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+        <Link href="/" className="flex items-center gap-5 group py-1">
+          <div className="relative">
+            {/* Multi-layered Kinetic Aura */}
+            <div className="absolute inset-[-12px] bg-indigo-500 blur-[30px] opacity-0 group-hover:opacity-40 transition-all duration-1000 group-hover:scale-150 animate-pulse" />
+            <div className="absolute inset-[-4px] bg-gradient-to-tr from-pink-500 via-purple-500 to-indigo-500 rounded-2xl opacity-20 group-hover:opacity-60 blur-sm animate-[spin_4s_linear_infinite]" />
+            
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-2xl bg-slate-950 border border-white/20 shadow-[0_0_20px_rgba(79,70,229,0.3)]"
+            >
+              {/* Spinning Quantum Rings */}
+              <div className="absolute inset-1 border-2 border-indigo-500/30 rounded-xl animate-[spin_3s_linear_infinite]" />
+              <div className="absolute inset-2 border border-purple-500/40 rounded-lg animate-[spin_2s_linear_infinite_reverse]" />
+              
+              {/* Core Icon with Chromatic Shadow */}
+              <div className="relative z-10">
+                <div className="absolute inset-0 text-pink-500 blur-[2px] translate-x-0.5 opacity-50">
+                   <Cpu className="w-7 h-7" />
+                </div>
+                <div className="absolute inset-0 text-cyan-400 blur-[2px] -translate-x-0.5 opacity-50">
+                   <Cpu className="w-7 h-7" />
+                </div>
+                <Cpu className="relative text-white w-7 h-7 drop-shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
+              </div>
+
+              {/* Internal Scanning Line */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/20 to-transparent h-1/2 w-full animate-[scan_2s_linear_infinite] pointer-events-none" />
+            </motion.div>
+          </div>
+          
+          <div className="flex flex-col relative group">
+            <h1 className="text-4xl font-black tracking-tighter leading-none flex items-center">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-white/60 uppercase italic drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">SAM</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-400 to-purple-600 ml-1">AI</span>
+            </h1>
+            <div className="flex items-center gap-2 mt-1.5">
+              <span className="text-[8px] font-black tracking-[0.5em] text-indigo-400/80 uppercase leading-none group-hover:text-white transition-colors">Neural Network</span>
+              <div className="h-[2px] flex-1 bg-gradient-to-r from-indigo-500/50 to-transparent rounded-full" />
+            </div>
+          </div>
+        </Link>
+        
+        <nav className="hidden lg:flex items-center gap-10 relative z-10">
+          {[
+            { name: "Features", href: "#features" },
+            { name: "Solutions", href: "#" },
+            { name: "Pricing", href: "#pricing" },
+            { name: "Resources", href: "#" }
+          ].map((item) => (
+            <Link 
+              key={item.name} 
+              href={item.href} 
+              className="text-[10px] font-black text-slate-500 hover:text-white transition-all uppercase tracking-[0.4em] relative group/link"
+            >
+              {item.name}
+              <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-500 transition-all group-hover/link:w-full" />
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-6 relative z-10">
+          <div className="h-6 w-[1px] bg-white/10 hidden md:block" />
+          
           <Show when="signed-out">
             <SignInButton mode="modal">
-              <button className="text-sm font-semibold hover:text-indigo-400 transition-colors">
+              <button className="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-[0.3em] transition-colors">
                 Sign In
               </button>
             </SignInButton>
-            <Link href="/dashboard" className="bg-white text-slate-950 px-5 py-2 rounded-full text-sm font-bold hover:bg-slate-200 transition-all">
-              Get Started
+            <Link href="/dashboard">
+              <button className="px-8 py-3 bg-white text-slate-950 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-indigo-50 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                Get Started
+              </button>
             </Link>
           </Show>
-          
+
           <Show when="signed-in">
-            <Link href="/dashboard" className="text-sm font-semibold hover:text-indigo-400 transition-colors">Dashboard</Link>
+            <Link href="/dashboard">
+              <button className="px-8 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-white/10 transition-all">
+                Dashboard
+              </button>
+            </Link>
             <UserButton afterSignOutUrl="/" />
           </Show>
-        </nav>
+        </div>
       </header>
 
       <main className="flex-1">
@@ -75,7 +158,7 @@ export default function Home() {
           >
             {/* 1. Ambient Floating Particles */}
             <div className="absolute inset-0 -z-10">
-              {[...Array(6)].map((_, i) => (
+              {mounted && [...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
                   animate={{
@@ -129,7 +212,7 @@ export default function Home() {
                     <div className="absolute inset-[-4px] bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-20 group-hover:opacity-100 transition-opacity" />
                     <button className="relative px-10 py-5 bg-white text-slate-950 rounded-2xl font-black text-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-3 shadow-xl overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                      Get Started for Free
+                      Get Started with SAM
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </Link>
@@ -199,69 +282,13 @@ export default function Home() {
             </div>
           </motion.div>
         </section>
+
+        <Testimonials />
+        <Pricing />
+        <FAQ />
       </main>
 
-      <footer className="px-6 py-20 border-t border-white/5 bg-slate-950">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <Video className="text-white w-5 h-5" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white">ViralClip</span>
-            </div>
-            <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
-              The AI-powered platform for creators who want to scale their presence across TikTok, Reels, and Shorts without spending hours in the edit suite.
-            </p>
-            <div className="flex gap-4">
-              {/* Social icons can be added here once correct icons are identified */}
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="font-bold mb-6 text-white text-sm uppercase tracking-widest">Product</h4>
-            <ul className="space-y-4 text-slate-400 text-sm">
-              {["Features", "Pricing", "API"].map((item) => (
-                <li key={item}>
-                  <Link 
-                    href="#" 
-                    className="relative inline-block hover:text-white hover:scale-105 transition-all duration-300 group"
-                  >
-                    {item}
-                    <span className="absolute left-0 bottom-[-4px] w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-6 text-white text-sm uppercase tracking-widest">Company</h4>
-            <ul className="space-y-4 text-slate-400 text-sm">
-              {["About", "Privacy", "Terms"].map((item) => (
-                <li key={item}>
-                  <Link 
-                    href="#" 
-                    className="relative inline-block hover:text-white hover:scale-105 transition-all duration-300 group"
-                  >
-                    {item}
-                    <span className="absolute left-0 bottom-[-4px] w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        
-        <div className="container mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-500 text-xs">
-            &copy; {new Date().getFullYear()} ViralClip AI. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-xs text-slate-500">
-             <span>Status: All Systems Operational</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

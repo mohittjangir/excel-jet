@@ -1,5 +1,5 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
+import CustomAuthWrapper from "@/components/CustomAuthWrapper";
+import { defaultMetadata } from "./metadata";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,10 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "ViralClip | AI-Powered Content Repurposer",
-  description: "Turn long-form videos into viral clips for TikTok, Reels, and Shorts in one click.",
-};
+export const metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
@@ -24,12 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-        <body className="antialiased min-h-screen bg-slate-950 text-slate-50">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="antialiased min-h-screen bg-slate-950 text-slate-50">
+        <CustomAuthWrapper>
           {children}
-        </body>
-      </html>
-    </ClerkProvider>
+        </CustomAuthWrapper>
+      </body>
+    </html>
   );
 }
