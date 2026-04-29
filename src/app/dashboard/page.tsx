@@ -29,6 +29,7 @@ import ContentCalendar from "@/components/dashboard/ContentCalendar";
 import OmnichannelTool from "@/components/dashboard/OmnichannelTool";
 import TeamWorkspace from "@/components/dashboard/TeamWorkspace";
 import BRollSuggester from "@/components/dashboard/BRollSuggester";
+import UserInfo from "@/components/UserInfo";
 
 type TabType = 'overview' | 'creative' | 'growth' | 'collaboration' | 'production';
 
@@ -180,10 +181,12 @@ export default function Dashboard() {
             exit={{ opacity: 0, y: -20 }}
             className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start"
           >
-            <ContentCalendar />
+            <div className="space-y-8">
+              <ContentCalendar />
+              <PerformanceChart />
+            </div>
             <div className="space-y-8">
               <OmnichannelTool />
-              <PerformanceChart />
             </div>
           </motion.div>
         );
@@ -212,7 +215,7 @@ export default function Dashboard() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="relative flex min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30 overflow-x-hidden"
+        className="relative flex h-screen text-slate-50 font-sans selection:bg-indigo-500/30 overflow-hidden"
       >
         <BackgroundEffects />
         
@@ -266,18 +269,12 @@ export default function Dashboard() {
             animate={{ y: 0, opacity: 1 }}
             className="mt-auto pt-6 border-t border-slate-900"
           >
-            <div className="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-slate-900/50 transition-all cursor-pointer group border border-transparent hover:border-slate-800">
-              <UserButton />
-              <div className="flex flex-col text-left">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Pro Plan</span>
-                <span className="text-xs text-indigo-400 font-black hover:text-indigo-300 transition-colors tracking-tight">UPGRADE NOW</span>
-              </div>
-            </div>
+            <UserInfo layout="sidebar" />
           </motion.div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
           <header className="p-6 border-b border-slate-900 flex items-center justify-between bg-slate-950/60 backdrop-blur-2xl sticky top-0 z-40">
             <div className="flex items-center gap-4">
               <motion.h2 
@@ -290,12 +287,7 @@ export default function Dashboard() {
               </motion.h2>
             </div>
             <div className="flex items-center gap-4">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="px-4 py-2 bg-indigo-600 text-white text-[10px] font-black rounded-xl border border-indigo-400/30 flex items-center gap-2 shadow-xl shadow-indigo-500/20 cursor-default uppercase tracking-widest"
-              >
-                <Sparkles className="w-4 h-4" /> 24 Credits Left
-              </motion.div>
+              <UserInfo />
             </div>
           </header>
 

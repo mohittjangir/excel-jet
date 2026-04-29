@@ -78,9 +78,15 @@ export default function Pricing() {
           {plans.map((plan, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: plan.popular ? 1.05 : 1 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                delay: i * 0.1 
+              }}
+              viewport={{ once: true, margin: "-50px" }}
               className={`relative p-10 rounded-[48px] border transition-all flex flex-col ${
                 plan.popular 
                   ? 'bg-slate-900/80 border-indigo-500/50 shadow-[0_0_80px_rgba(79,70,229,0.15)] scale-105 z-10 backdrop-blur-xl' 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { SignInButton, Show, UserButton } from "@clerk/nextjs";
+import { SignInButton, Show } from "@clerk/nextjs";
 import { Bot, ArrowRight, CheckCircle2, Sparkles, Cpu } from "lucide-react";
 import { motion, useTransform, useScroll } from "framer-motion";
 import Hero from "@/components/Hero";
@@ -13,6 +13,7 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import UserInfo from "@/components/UserInfo";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -47,22 +48,22 @@ export default function Home() {
             {/* Multi-layered Kinetic Aura */}
             <div className="absolute inset-[-12px] bg-indigo-500 blur-[30px] opacity-0 group-hover:opacity-40 transition-all duration-1000 group-hover:scale-150 animate-pulse" />
             <div className="absolute inset-[-4px] bg-gradient-to-tr from-pink-500 via-purple-500 to-indigo-500 rounded-2xl opacity-20 group-hover:opacity-60 blur-sm animate-[spin_4s_linear_infinite]" />
-            
-            <motion.div 
+
+            <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-2xl bg-slate-950 border border-white/20 shadow-[0_0_20px_rgba(79,70,229,0.3)]"
             >
               {/* Spinning Quantum Rings */}
               <div className="absolute inset-1 border-2 border-indigo-500/30 rounded-xl animate-[spin_3s_linear_infinite]" />
               <div className="absolute inset-2 border border-purple-500/40 rounded-lg animate-[spin_2s_linear_infinite_reverse]" />
-              
+
               {/* Core Icon with Chromatic Shadow */}
               <div className="relative z-10">
                 <div className="absolute inset-0 text-pink-500 blur-[2px] translate-x-0.5 opacity-50">
-                   <Cpu className="w-7 h-7" />
+                  <Cpu className="w-7 h-7" />
                 </div>
                 <div className="absolute inset-0 text-cyan-400 blur-[2px] -translate-x-0.5 opacity-50">
-                   <Cpu className="w-7 h-7" />
+                  <Cpu className="w-7 h-7" />
                 </div>
                 <Cpu className="relative text-white w-7 h-7 drop-shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
               </div>
@@ -71,7 +72,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/20 to-transparent h-1/2 w-full animate-[scan_2s_linear_infinite] pointer-events-none" />
             </motion.div>
           </div>
-          
+
           <div className="flex flex-col relative group">
             <h1 className="text-4xl font-black tracking-tighter leading-none flex items-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-white/60 uppercase italic drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">SAM</span>
@@ -83,7 +84,7 @@ export default function Home() {
             </div>
           </div>
         </Link>
-        
+
         <nav className="hidden lg:flex items-center gap-10 relative z-10">
           {[
             { name: "Features", href: "#features" },
@@ -91,20 +92,25 @@ export default function Home() {
             { name: "Pricing", href: "#pricing" },
             { name: "Resources", href: "#" }
           ].map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              className="text-[10px] font-black text-slate-500 hover:text-white transition-all uppercase tracking-[0.4em] relative group/link"
+            <motion.div
+              key={item.name}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {item.name}
-              <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-500 transition-all group-hover/link:w-full" />
-            </Link>
+              <Link
+                href={item.href}
+                className="text-[10px] font-black text-slate-500 hover:text-white transition-all uppercase tracking-[0.4em] relative group/link"
+              >
+                {item.name}
+                <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-500 transition-all group-hover/link:w-full shadow-[0_0_8px_rgba(99,102,241,0.6)]" />
+              </Link>
+            </motion.div>
           ))}
         </nav>
 
         <div className="flex items-center gap-6 relative z-10">
           <div className="h-6 w-[1px] bg-white/10 hidden md:block" />
-          
+
           <Show when="signed-out">
             <SignInButton mode="modal">
               <button className="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-[0.3em] transition-colors">
@@ -124,14 +130,14 @@ export default function Home() {
                 Dashboard
               </button>
             </Link>
-            <UserButton afterSignOutUrl="/" />
+            <UserInfo />
           </Show>
         </div>
       </header>
 
       <main className="flex-1">
         <Hero />
-        
+
         <div id="features" className="relative z-10 mt-20 md:mt-0">
           <Features />
         </div>
@@ -150,7 +156,7 @@ export default function Home() {
 
         {/* CTA Section - Enhanced Wide & Horizontal */}
         <section className="py-32 container mx-auto px-6">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -202,7 +208,7 @@ export default function Home() {
                   Go Viral <br />
                   <span className="text-white">on Autopilot.</span>
                 </h2>
-                
+
                 <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-lg leading-relaxed">
                   Join 5,000+ elite creators who are dominating social media with AI-powered repurposing.
                 </p>
@@ -228,33 +234,33 @@ export default function Home() {
               <div className="flex-1 relative w-full h-[450px] hidden lg:block">
                 <div className="absolute inset-0 flex items-center justify-center">
                   {/* Floating Mockup Cards with Magnet Effect */}
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.05, rotate: -15, x: -10 }}
                     style={{ y: useTransform(useScroll().scrollYProgress, [0.8, 1], [60, -60]) }}
                     className="absolute left-0 top-10 w-48 aspect-[9/16] bg-slate-800 rounded-2xl border border-white/10 shadow-2xl overflow-hidden rotate-[-12deg] z-10 cursor-pointer transition-colors hover:border-indigo-500/50"
                   >
-                     <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=75&w=600')] bg-cover bg-center" />
-                     <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/20 rounded-full overflow-hidden">
-                        <motion.div animate={{ width: ["0%", "100%"] }} transition={{ duration: 3, repeat: Infinity }} className="h-full bg-indigo-500" />
-                     </div>
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=75&w=600')] bg-cover bg-center" />
+                    <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/20 rounded-full overflow-hidden">
+                      <motion.div animate={{ width: ["0%", "100%"] }} transition={{ duration: 3, repeat: Infinity }} className="h-full bg-indigo-500" />
+                    </div>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.05, rotate: 15, x: 10 }}
                     style={{ y: useTransform(useScroll().scrollYProgress, [0.8, 1], [-60, 60]) }}
                     className="absolute right-0 bottom-10 w-48 aspect-[9/16] bg-slate-800 rounded-2xl border border-white/10 shadow-2xl overflow-hidden rotate-[12deg] z-10 cursor-pointer transition-colors hover:border-purple-500/50"
                   >
-                     <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=75&w=600')] bg-cover bg-center" />
-                     <div className="absolute inset-0 bg-indigo-600/20 backdrop-blur-[2px] flex items-center justify-center">
-                        <Sparkles className="text-white w-8 h-8 animate-pulse" />
-                     </div>
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=75&w=600')] bg-cover bg-center" />
+                    <div className="absolute inset-0 bg-indigo-600/20 backdrop-blur-[2px] flex items-center justify-center">
+                      <Sparkles className="text-white w-8 h-8 animate-pulse" />
+                    </div>
                   </motion.div>
 
                   {/* Central Glow */}
                   <div className="w-64 h-64 bg-indigo-500/20 blur-[100px] rounded-full animate-pulse" />
-                  
+
                   {/* Metric Card with Bouncing Bars */}
-                  <motion.div 
+                  <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     className="absolute z-20 bg-white/5 border border-white/10 backdrop-blur-3xl p-6 rounded-[32px] shadow-2xl"
@@ -265,16 +271,16 @@ export default function Home() {
                     </div>
                     <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">New Followers This Week</div>
                     <div className="mt-4 h-16 flex items-end gap-2">
-                       {[40, 75, 45, 95, 65, 85, 55].map((h, i) => (
-                         <motion.div 
-                           key={i}
-                           initial={{ height: 0 }}
-                           whileInView={{ height: `${h}%` }}
-                           animate={{ height: [`${h}%`, `${h+5}%`, `${h}%`] }}
-                           transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                           className="flex-1 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-sm"
-                         />
-                       ))}
+                      {[40, 75, 45, 95, 65, 85, 55].map((h, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ height: 0 }}
+                          whileInView={{ height: `${h}%` }}
+                          animate={{ height: [`${h}%`, `${h + 5}%`, `${h}%`] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                          className="flex-1 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-sm"
+                        />
+                      ))}
                     </div>
                   </motion.div>
                 </div>

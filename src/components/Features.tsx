@@ -78,10 +78,15 @@ function FeatureCard({ feature, index }: { feature: typeof features[0], index: n
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0, y: 50, rotateX: 10 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay: index * 0.1
+      }}
+      viewport={{ once: true, margin: "-100px" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
@@ -89,10 +94,10 @@ function FeatureCard({ feature, index }: { feature: typeof features[0], index: n
     >
       {/* Dynamic Glow Background */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl -z-10 rounded-full ${feature.glow}`} />
-      
+
       {/* Animated Border Beam */}
       <div className="absolute inset-0 rounded-[32px] overflow-hidden">
-        <motion.div 
+        <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_300deg,rgba(99,102,241,0.3)_360deg)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -105,7 +110,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0], index: n
             {feature.icon}
           </div>
         </div>
-        
+
         <h3 className="text-2xl font-bold mb-4 group-hover:text-white transition-colors">
           {feature.title}
         </h3>
@@ -136,7 +141,7 @@ export default function Features() {
             <Sparkles className="w-4 h-4" />
             Capabilities
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -145,7 +150,7 @@ export default function Features() {
             Built for the <br />
             <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Attention Economy</span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

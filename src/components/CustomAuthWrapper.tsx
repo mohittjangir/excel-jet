@@ -9,28 +9,45 @@ export default function CustomAuthWrapper({ children }: { children: React.ReactN
       appearance={{
         baseTheme: dark,
         variables: {
-          colorPrimary: "#4f46e5", // indigo-600
-          colorBackground: "#020617", // slate-950
-          colorInputBackground: "#0f172a", // slate-900
-          colorInputText: "#f8fafc", // slate-50
-          colorText: "#f8fafc",
+          colorPrimary: "#6366f1", // indigo-500
+          colorBackground: "#0f172a", // slate-900
+          colorInputBackground: "#1e293b", // slate-800
+          colorInputText: "#ffffff",
+          colorText: "#ffffff",
           colorTextSecondary: "#94a3b8", // slate-400
           fontFamily: "var(--font-geist-sans), sans-serif",
           borderRadius: "1rem",
         },
+        layout: {
+          socialButtonsPlacement: "bottom",
+          socialButtonsVariant: "blockButton",
+        },
         elements: {
-          card: "bg-slate-950 border border-white/10 shadow-2xl backdrop-blur-3xl",
-          headerTitle: "font-black text-2xl uppercase italic tracking-tight text-white",
-          headerSubtitle: "font-medium text-slate-400",
-          formButtonPrimary: "bg-indigo-600 hover:bg-indigo-500 font-bold tracking-wide uppercase shadow-xl shadow-indigo-600/20 transition-all",
-          formFieldInput: "border-white/10 bg-slate-900 focus:border-indigo-500/50 focus:ring-indigo-500/50 transition-all",
-          formFieldLabel: "text-slate-300 font-bold text-xs uppercase tracking-widest",
-          footerActionLink: "text-indigo-400 hover:text-indigo-300 font-bold",
-          identityPreview: "bg-slate-900 border border-white/5",
-          identityPreviewText: "text-white",
-          socialButtonsBlockButton: "border-white/10 hover:bg-slate-900 text-white font-semibold transition-all",
-          dividerLine: "bg-white/10",
-          dividerText: "text-slate-500 font-bold uppercase tracking-widest text-[10px]",
+          card: "bg-[#020617]/90 backdrop-blur-2xl border border-white/10 shadow-[0_0_60px_-15px_rgba(99,102,241,0.4)] rounded-[2rem]",
+          headerTitle: "!text-transparent !bg-clip-text !bg-gradient-to-br !from-white !to-white/60 font-black text-3xl tracking-tighter drop-shadow-md",
+          headerSubtitle: "!text-indigo-300/80 font-medium text-sm tracking-wide mt-1",
+          socialButtonsBlockButton: "!text-white bg-slate-900/50 border border-white/5 hover:border-white/10 hover:bg-slate-800/80 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-300 rounded-2xl py-3.5",
+          socialButtonsBlockButtonText: "!text-white font-bold tracking-wide",
+          dividerLine: "bg-gradient-to-r from-transparent via-white/10 to-transparent",
+          dividerText: "!text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px]",
+          formFieldLabel: "!text-slate-300 font-bold text-xs uppercase tracking-wider mb-2",
+          formFieldInput: "!text-white bg-slate-900/50 border border-white/5 focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 hover:border-white/10 transition-all duration-300 rounded-2xl py-3 px-4",
+          formButtonPrimary: "!text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 font-black tracking-widest uppercase text-sm rounded-2xl py-4 shadow-[0_0_30px_rgba(99,102,241,0.3)] hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300",
+          footerActionText: "!text-slate-400 font-medium",
+          footerActionLink: "!text-indigo-400 hover:!text-indigo-300 font-black tracking-wide transition-colors",
+          identityPreview: "bg-indigo-950/20 border border-indigo-500/20 shadow-[inset_0_0_20px_rgba(99,102,241,0.05)] rounded-2xl transition-all hover:border-indigo-500/40 py-4 px-5",
+          identityPreviewText: "!text-indigo-50 font-bold tracking-wide",
+          identityPreviewEditButtonIcon: "!text-indigo-400 hover:!text-indigo-300 hover:scale-110 transition-all drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]",
+          formFieldAction: "!text-indigo-400 hover:!text-indigo-300 font-bold text-xs uppercase tracking-wider transition-colors",
+          otpCodeFieldInput: "!text-white !text-2xl !font-black !bg-slate-800 !border-indigo-500/40 hover:!border-indigo-400 hover:!bg-slate-700/80 focus:!border-indigo-400 focus:!ring-4 focus:!ring-indigo-500/30 transition-all duration-300 rounded-2xl shadow-[0_0_15px_rgba(99,102,241,0.2)] h-14 w-12 flex items-center justify-center",
+          modalBackdrop: "bg-slate-950/80 backdrop-blur-xl",
+          userButtonPopoverCard: "bg-[#020617]/95 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_-10px_rgba(99,102,241,0.3)] rounded-3xl overflow-hidden",
+          userButtonPopoverHeaderTitle: "!text-white font-black text-lg tracking-tight",
+          userButtonPopoverHeaderSubtitle: "!text-white/70 font-medium text-xs", // Slightly dimmed white for hierarchy
+          userButtonPopoverActionButton: "hover:bg-indigo-500/10 transition-all duration-300 py-3 px-4 group",
+          userButtonPopoverActionButtonText: "!text-white font-bold text-sm", // Pure white for buttons
+          userButtonPopoverActionButtonIcon: "!text-indigo-400 group-hover:!text-indigo-300",
+          userButtonPopoverFooter: "hidden", 
         }
       }}
     >
