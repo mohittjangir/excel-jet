@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { SignInButton, Show } from "@clerk/nextjs";
 import { Bot, ArrowRight, CheckCircle2, Sparkles, Cpu } from "lucide-react";
-import { motion, useTransform, useScroll } from "framer-motion";
+import { motion, useTransform, useScroll, animate } from "framer-motion";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import UploadZone from "@/components/UploadZone";
@@ -15,11 +15,45 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import UserInfo from "@/components/UserInfo";
 
+const NAV_ITEMS = [
+  { name: "Features", href: "#features" },
+  { name: "Solutions", href: "#solutions" },
+  { name: "Pricing", href: "#pricing" },
+  { name: "Resources", href: "#faq" }
+];
+
 export default function Home() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  const handleSmoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (href.startsWith("#") && href.length > 1) {
+      e.preventDefault();
+      const targetId = href.replace("#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        const targetPos = elem.getBoundingClientRect().top + window.pageYOffset;
+        const startPos = window.pageYOffset;
+        const distance = Math.abs(targetPos - startPos);
+        
+        const duration = Math.min(Math.max(distance / 2800, 0.4), 1.0);
+
+        animate(startPos, targetPos, {
+          type: "tween",
+          duration: duration,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          onUpdate: (latest: number) => {
+            window.scrollTo(0, Math.floor(latest));
+          },
+          onComplete: () => {
+            window.scrollTo(0, targetPos);
+          }
+        });
+      }
+    }
   }, []);
 
   return (
@@ -86,12 +120,7 @@ export default function Home() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10 relative z-10">
-          {[
-            { name: "Features", href: "#features" },
-            { name: "Solutions", href: "#" },
-            { name: "Pricing", href: "#pricing" },
-            { name: "Resources", href: "#" }
-          ].map((item) => (
+          {NAV_ITEMS.map((item) => (
             <motion.div
               key={item.name}
               whileHover={{ y: -2 }}
@@ -99,6 +128,7 @@ export default function Home() {
             >
               <Link
                 href={item.href}
+                onClick={(e) => handleSmoothScroll(e, item.href)}
                 className="text-[10px] font-black text-slate-500 hover:text-white transition-all uppercase tracking-[0.4em] relative group/link"
               >
                 {item.name}
@@ -142,8 +172,8 @@ export default function Home() {
           <Features />
         </div>
 
-        {/* Upload Preview Section */}
-        <section className="py-24 bg-indigo-600/5 border-y border-white/5 relative">
+        {/* Upload Preview Section - Linked to Solutions */}
+        <section id="solutions" className="py-24 bg-indigo-600/5 border-y border-white/5 relative">
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full" />
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center mb-16">

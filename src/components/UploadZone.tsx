@@ -10,25 +10,23 @@ export default function UploadZone() {
   const [progress, setProgress] = useState(0);
   const [complete, setComplete] = useState(false);
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
-  };
+  }, []);
 
-  const handleUpload = async () => {
+  const handleUpload = useCallback(async () => {
     if (!file) return;
     setUploading(true);
     setProgress(0);
 
     try {
-      // 1. Get pre-signed URL from our backend
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generate-upload-url?filename=${file.name}`, {
         method: 'POST',
       });
-      const { url, fields, object_key } = await res.json();
+      const { url, fields } = await res.json();
 
-      // 2. Upload to S3
       const formData = new FormData();
       Object.entries(fields).forEach(([key, value]) => {
         formData.append(key, value as string);
@@ -42,14 +40,13 @@ export default function UploadZone() {
 
       if (uploadRes.ok) {
         setComplete(true);
-        // 3. Notify backend to start processing (Phase 3)
       }
     } catch (error) {
       console.error("Upload failed", error);
     } finally {
       setUploading(false);
     }
-  };
+  }, [file]);
 
   return (
     <div className="w-full max-w-2xl mx-auto">

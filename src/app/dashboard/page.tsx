@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { Bot, LayoutDashboard, History, Settings, Sparkles, 
@@ -33,16 +33,20 @@ import UserInfo from "@/components/UserInfo";
 
 type TabType = 'overview' | 'creative' | 'growth' | 'collaboration' | 'production';
 
+const TABS = [
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'creative', label: 'Creative', icon: Palette },
+  { id: 'production', label: 'Production', icon: Film },
+  { id: 'growth', label: 'Growth', icon: BarChart3 },
+  { id: 'collaboration', label: 'Collab', icon: Users },
+];
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
 
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'creative', label: 'Creative', icon: Palette },
-    { id: 'production', label: 'Production', icon: Film },
-    { id: 'growth', label: 'Growth', icon: BarChart3 },
-    { id: 'collaboration', label: 'Collab', icon: Users },
-  ];
+  const handleTabChange = useCallback((id: string) => {
+    setActiveTab(id as TabType);
+  }, []);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -243,14 +247,16 @@ export default function Dashboard() {
           </Link>
 
           <nav className="flex-1 space-y-3">
-            {tabs.map((tab) => (
+            {TABS.map((tab) => (
               <button 
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as TabType)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`w-full group text-left ${activeTab === tab.id ? 'active' : ''}`}
               >
                 <motion.div 
                   whileHover={{ x: 4 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all border ${
                     activeTab === tab.id 
                     ? 'bg-indigo-500/10 text-indigo-400 font-black border-indigo-500/20 shadow-inner' 
@@ -279,11 +285,12 @@ export default function Dashboard() {
             <div className="flex items-center gap-4">
               <motion.h2 
                 key={activeTab}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.15 }}
                 className="text-xl font-black tracking-tight uppercase italic text-slate-200"
               >
-                {tabs.find(t => t.id === activeTab)?.label}
+                {TABS.find(t => t.id === activeTab)?.label}
               </motion.h2>
             </div>
             <div className="flex items-center gap-4">

@@ -90,7 +90,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0], index: n
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="relative group p-8 rounded-[32px] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-colors duration-500 will-change-transform"
+      className="relative group p-8 rounded-[32px] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-colors duration-500 will-change-transform transform-gpu backface-hidden"
     >
       {/* Dynamic Glow Background */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl -z-10 rounded-full ${feature.glow}`} />

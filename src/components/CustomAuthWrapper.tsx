@@ -10,11 +10,11 @@ export default function CustomAuthWrapper({ children }: { children: React.ReactN
         baseTheme: dark,
         variables: {
           colorPrimary: "#6366f1", // indigo-500
-          colorBackground: "#0f172a", // slate-900
+          colorBackground: "#0F172A", // updated background
           colorInputBackground: "#1e293b", // slate-800
           colorInputText: "#ffffff",
           colorText: "#ffffff",
-          colorTextSecondary: "#94a3b8", // slate-400
+          colorTextSecondary: "#9CA3AF", // updated secondary text
           fontFamily: "var(--font-geist-sans), sans-serif",
           borderRadius: "1rem",
         },
@@ -41,14 +41,38 @@ export default function CustomAuthWrapper({ children }: { children: React.ReactN
           formFieldAction: "!text-indigo-400 hover:!text-indigo-300 font-bold text-xs uppercase tracking-wider transition-colors",
           otpCodeFieldInput: "!text-white !text-2xl !font-black !bg-slate-800 !border-indigo-500/40 hover:!border-indigo-400 hover:!bg-slate-700/80 focus:!border-indigo-400 focus:!ring-4 focus:!ring-indigo-500/30 transition-all duration-300 rounded-2xl shadow-[0_0_15px_rgba(99,102,241,0.2)] h-14 w-12 flex items-center justify-center",
           modalBackdrop: "bg-slate-950/80 backdrop-blur-xl",
-          userButtonPopoverCard: "bg-[#020617]/95 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_-10px_rgba(99,102,241,0.3)] rounded-3xl overflow-hidden",
-          userButtonPopoverHeaderTitle: "!text-white font-black text-lg tracking-tight",
-          userButtonPopoverHeaderSubtitle: "!text-white/70 font-medium text-xs", // Slightly dimmed white for hierarchy
-          userButtonPopoverActionButton: "hover:bg-indigo-500/10 transition-all duration-300 py-3 px-4 group",
-          userButtonPopoverActionButtonText: "!text-white font-bold text-sm", // Pure white for buttons
-          userButtonPopoverActionButtonIcon: "!text-indigo-400 group-hover:!text-indigo-300",
-          userButtonPopoverFooter: "hidden", 
-        }
+          userButtonPopoverCard: {
+            backgroundColor: "#0F172A",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "20px",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.8)",
+            overflow: "hidden",
+          },
+          userButtonPopoverHeader: {
+            backgroundColor: "#1E293B",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          },
+          userButtonPopoverHeaderTitle: {
+            color: "#FFFFFF",
+            fontWeight: "700",
+          },
+          userButtonPopoverHeaderSubtitle: {
+            color: "#9CA3AF",
+          },
+          userButtonPopoverActions: {
+            backgroundColor: "#0F172A",
+            padding: "8px",
+          },
+          userButtonPopoverActionButton: {
+            borderRadius: "10px",
+            padding: "10px 12px",
+          },
+          userButtonPopoverActionButtonText: {
+            color: "#E6EAF2",
+            fontSize: "13px",
+            fontWeight: "500",
+          },
+          userButtonPopoverFooter: "hidden",        }
       }}
     >
       {children}

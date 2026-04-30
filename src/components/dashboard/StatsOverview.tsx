@@ -1,9 +1,10 @@
 "use client";
 
+import React, { memo } from "react";
 import { Video, HardDrive, Clock, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function StatsOverview() {
+const StatsOverview = memo(function StatsOverview() {
   const stats = [
     { label: "Total Videos", value: "14", icon: Video, color: "text-blue-500", bg: "bg-blue-500/10" },
     { label: "Storage Used", value: "4.2 GB", icon: HardDrive, color: "text-purple-500", bg: "bg-purple-500/10" },
@@ -59,4 +60,6 @@ export default function StatsOverview() {
       ))}
     </motion.div>
   );
-}
+});
+
+export default StatsOverview;

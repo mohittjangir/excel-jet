@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 
 export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
-  const plans = [
+  const toggleBilling = useCallback(() => {
+    setBillingCycle(prev => prev === 'monthly' ? 'yearly' : 'monthly');
+  }, []);
+
+  const plans = useMemo(() => [
     {
       name: "Starter",
       price: billingCycle === 'monthly' ? "0" : "0",
@@ -32,7 +36,7 @@ export default function Pricing() {
       cta: "Contact Sales",
       popular: false
     }
-  ];
+  ], [billingCycle]);
 
   return (
     <section id="pricing" className="py-32 relative">
@@ -59,7 +63,7 @@ export default function Pricing() {
           <div className="flex items-center justify-center gap-6">
             <span className={`text-sm font-black uppercase italic tracking-tighter transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>Monthly</span>
             <button 
-              onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
+              onClick={toggleBilling}
               className="w-16 h-9 bg-slate-900 rounded-full p-1.5 border border-slate-800 relative transition-all shadow-inner group"
             >
               <motion.div 

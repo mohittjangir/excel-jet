@@ -91,12 +91,12 @@ export default function Hero() {
           className="mt-24 relative max-w-6xl mx-auto rounded-[32px] border border-white/10 bg-slate-900/40 p-3 md:p-6 backdrop-blur-lg shadow-[0_0_80px_rgba(0,0,0,0.4)] group will-change-transform"
         >
           {/* Decorative Floating Elements */}
-          <div className="absolute -top-12 -left-6 md:-left-12 p-6 rounded-3xl bg-indigo-600/10 border border-indigo-500/20 backdrop-blur-md shadow-2xl hidden lg:block animate-bounce-slow z-20 will-change-transform">
+          <div className="absolute -top-12 -left-6 md:-left-12 p-6 rounded-3xl bg-indigo-600/10 border border-indigo-500/20 backdrop-blur-md shadow-2xl hidden lg:block animate-bounce-slow z-20 will-change-transform transform-gpu backface-hidden">
             <Zap className="text-indigo-400 w-8 h-8 mb-2" />
             <div className="text-xs font-bold text-white">AI ANALYSIS</div>
             <div className="text-[10px] text-slate-400">98% Viral Probability</div>
           </div>
-          <div className="absolute -bottom-8 -right-6 md:-right-12 p-6 rounded-3xl bg-violet-600/10 border border-violet-500/20 backdrop-blur-md shadow-2xl hidden lg:block animate-float z-20 will-change-transform">
+          <div className="absolute -bottom-8 -right-6 md:-right-12 p-6 rounded-3xl bg-violet-600/10 border border-violet-500/20 backdrop-blur-md shadow-2xl hidden lg:block animate-float z-20 will-change-transform transform-gpu backface-hidden">
             <Layout className="text-violet-400 w-8 h-8 mb-2" />
             <div className="text-xs font-bold text-white">AUTO-CROP</div>
             <div className="text-[10px] text-slate-400">9:16 Active Track</div>

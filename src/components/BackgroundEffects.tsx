@@ -57,7 +57,7 @@ export default function BackgroundEffects() {
       />
 
       {/* 5. Soft Edge Vignette */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950 opacity-60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950 opacity-60 pointer-events-none transform-gpu backface-hidden" />
     </div>
   );
 }
