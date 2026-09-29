@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 
 export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -13,121 +13,118 @@ export default function Pricing() {
 
   const plans = useMemo(() => [
     {
-      name: "Starter",
-      price: billingCycle === 'monthly' ? "0" : "0",
-      desc: "Perfect for exploring the AI power.",
-      features: ["10 clips per month", "Standard captions", "720p export", "Community support"],
-      cta: "Get Started",
+      name: "Facility Standard",
+      price: billingCycle === 'monthly' ? "149" : "119",
+      desc: "Ideal for single facility warehouses scaling inventory.",
+      features: ["Up to 10,000 active SKUs", "Inbound receiving & putaway", "Standard barcode scanning", "Basic stock analytics", "Email support"],
+      cta: "Start Free Trial",
       popular: false
     },
     {
-      name: "Pro",
-      price: billingCycle === 'monthly' ? "29" : "24",
-      desc: "For serious creators scaling viral brands.",
-      features: ["Unlimited clips", "Hormozi style captions", "4K Ultra HD", "Priority rendering", "Custom Brand Kits"],
-      cta: "Go Pro Now",
+      name: "Enterprise Excel Jet",
+      price: billingCycle === 'monthly' ? "499" : "399",
+      desc: "For multi-warehouse operations requiring full automation.",
+      features: ["Unlimited SKUs & Facilities", "Multi-bin location mapping", "Real-time carrier dispatch API", "Custom role permissions", "Dedicated WMS Specialist"],
+      cta: "Launch Enterprise",
       popular: true
     },
     {
-      name: "Agency",
-      price: billingCycle === 'monthly' ? "99" : "79",
-      desc: "The ultimate tool for content teams.",
-      features: ["All Pro features", "Team workspaces", "Shared credit pool", "Dedicated manager", "White-label reports"],
+      name: "Custom Logistics",
+      price: billingCycle === 'monthly' ? "Custom" : "Custom",
+      desc: "Dedicated infrastructure & tailored ERP integrations.",
+      features: ["All Enterprise features", "Custom ERP/SAP connectors", "On-premise deployment option", "SLA & 24/7 phone support", "Custom operator training"],
       cta: "Contact Sales",
       popular: false
     }
   ], [billingCycle]);
 
   return (
-    <section id="pricing" className="py-32 relative">
+    <section id="pricing" className="py-20 bg-[#F8FAFC]">
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8"
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0077C8]/10 border border-[#0077C8]/20 text-[#0077C8] text-xs font-bold uppercase tracking-wider mb-4"
           >
-            <Sparkles className="w-3 h-3" />
-            <span>Pricing Plans</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-[#0077C8]" />
+            <span>Pricing & Licensing</span>
           </motion.div>
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black mb-8 uppercase italic tracking-tighter leading-none"
+            className="text-3xl md:text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight"
           >
-            Simple, <span className="text-indigo-500">Transparent</span> <br />Pricing
+            Transparent Excel Jet WMS Licensing
           </motion.h2>
-          <p className="text-slate-400 text-lg mb-12 font-medium">Choose the plan that fits your viral ambition. No hidden fees.</p>
+          <p className="text-[#64748B] text-base font-medium mb-8">Choose the plan that scales with your warehouse throughput.</p>
           
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-6">
-            <span className={`text-sm font-black uppercase italic tracking-tighter transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>Monthly</span>
+          <div className="flex items-center justify-center gap-4">
+            <span className={`text-xs font-bold uppercase tracking-wider transition-colors ${billingCycle === 'monthly' ? 'text-[#0F172A]' : 'text-[#64748B]'}`}>Monthly</span>
             <button 
               onClick={toggleBilling}
-              className="w-16 h-9 bg-slate-900 rounded-full p-1.5 border border-slate-800 relative transition-all shadow-inner group"
+              className="w-14 h-8 bg-[#E2E8F0] rounded-full p-1 relative transition-all border border-[#CBD5E1]"
             >
               <motion.div 
-                animate={{ x: billingCycle === 'monthly' ? 0 : 28 }}
-                className="w-6 h-6 bg-indigo-600 rounded-full shadow-xl shadow-indigo-600/40 border border-indigo-400/30"
+                animate={{ x: billingCycle === 'monthly' ? 0 : 24 }}
+                className="w-6 h-6 bg-[#0077C8] rounded-full shadow-md"
               />
             </button>
-            <div className="flex items-center gap-3">
-              <span className={`text-sm font-black uppercase italic tracking-tighter transition-colors ${billingCycle === 'yearly' ? 'text-white' : 'text-slate-500'}`}>Yearly</span>
-              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20 shadow-lg shadow-emerald-500/5">Save 20%</span>
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-bold uppercase tracking-wider transition-colors ${billingCycle === 'yearly' ? 'text-[#0F172A]' : 'text-[#64748B]'}`}>Annual</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#16A34A]/10 text-[#16A34A] text-[10px] font-bold uppercase tracking-wider border border-[#16A34A]/20">Save 20%</span>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 50, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: plan.popular ? 1.05 : 1 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 100,
-                damping: 20,
-                delay: i * 0.1 
-              }}
-              viewport={{ once: true, margin: "-50px" }}
-              className={`relative p-10 rounded-[48px] border transition-all flex flex-col ${
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={`relative p-8 rounded-xl border transition-all flex flex-col ${
                 plan.popular 
-                  ? 'bg-slate-900/80 border-indigo-500/50 shadow-[0_0_80px_rgba(79,70,229,0.15)] scale-105 z-10 backdrop-blur-xl' 
-                  : 'bg-slate-900/40 border-white/5 hover:border-white/10 backdrop-blur-md'
+                  ? 'bg-white border-[#0077C8] shadow-lg shadow-[#0077C8]/10 ring-2 ring-[#0077C8]' 
+                  : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1] shadow-sm'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full shadow-2xl shadow-indigo-600/50 flex items-center gap-2 border border-indigo-400/40">
-                  <Sparkles className="w-3.5 h-3.5" /> Best Value
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#0077C8] text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-md flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3" /> Recommended
                 </div>
               )}
               
-              <div className="mb-10 text-left">
-                <h3 className="text-2xl font-black uppercase italic text-white mb-3 tracking-tight">{plan.name}</h3>
-                <p className="text-sm text-slate-400 font-medium leading-relaxed">{plan.desc}</p>
+              <div className="mb-6 text-left">
+                <h3 className="text-xl font-bold text-[#0F172A] mb-2">{plan.name}</h3>
+                <p className="text-xs text-[#64748B] font-medium leading-relaxed">{plan.desc}</p>
               </div>
               
-              <div className="flex items-baseline gap-2 mb-10">
-                <span className="text-6xl font-black text-white tracking-tighter">${plan.price}</span>
-                <span className="text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">/ month</span>
+              <div className="flex items-baseline gap-1 mb-6">
+                <span className="text-4xl font-extrabold text-[#0F172A] tracking-tight">
+                  {plan.price !== "Custom" ? `$${plan.price}` : "Custom"}
+                </span>
+                {plan.price !== "Custom" && <span className="text-[#64748B] font-semibold text-xs">/ facility / month</span>}
               </div>
               
-              <button className={`w-full py-5 rounded-[24px] text-xs font-black uppercase tracking-[0.2em] transition-all mb-10 flex items-center justify-center gap-2 group ${
+              <button className={`w-full py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all mb-8 flex items-center justify-center gap-2 ${
                 plan.popular 
-                  ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-2xl shadow-indigo-600/40 border border-indigo-400/40' 
-                  : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
+                  ? 'bg-[#0077C8] hover:bg-[#0066B0] text-white shadow-sm' 
+                  : 'bg-[#F8FAFC] hover:bg-[#E2E8F0] text-[#0F172A] border border-[#E2E8F0]'
               }`}>
                 {plan.cta}
               </button>
               
-              <div className="space-y-5 flex-1 text-left">
+              <div className="space-y-3.5 flex-1 text-left">
                 {plan.features.map((feature, j) => (
-                  <div key={j} className="flex items-center gap-4">
-                    <div className={`w-6 h-6 rounded-xl flex items-center justify-center shrink-0 border ${plan.popular ? 'bg-indigo-500/10 border-indigo-500/20' : 'bg-white/5 border-white/5'}`}>
-                      <Check className={`w-3.5 h-3.5 ${plan.popular ? 'text-indigo-400' : 'text-slate-500'}`} />
+                  <div key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#16A34A]/10 flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-[#16A34A]" />
                     </div>
-                    <span className="text-sm font-bold text-slate-300 tracking-tight">{feature}</span>
+                    <span className="text-xs font-semibold text-[#0F172A]">{feature}</span>
                   </div>
                 ))}
               </div>

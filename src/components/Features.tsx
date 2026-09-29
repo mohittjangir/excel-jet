@@ -1,169 +1,94 @@
 "use client";
-// Forced re-compile to clear stale Lucide icon cache
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Zap, Scissors, BarChart3, Globe, Smartphone, Shield, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+import { Warehouse, Boxes, Truck, ShieldCheck, BarChart3, ScanLine } from "lucide-react";
 
-const features = [
+const wmsFeatures = [
   {
-    title: "AI Moment Hunter",
-    description: "Our AI analyzes your transcript to find the most engaging and viral-worthy moments automatically.",
-    icon: <Zap className="w-6 h-6" />,
-    color: "from-amber-400 to-orange-500",
-    glow: "bg-orange-500/20"
+    title: "Inventory & Stock Tracking",
+    description: "Real-time visibility into all warehouse stock levels, serial numbers, lot numbers, and location details.",
+    icon: <Warehouse className="w-5 h-5" />,
   },
   {
-    title: "Smart Auto-Crop",
-    description: "No more manual reframing. AI keeps you center-stage with intelligent face tracking and 9:16 cropping.",
-    icon: <Scissors className="w-6 h-6" />,
-    color: "from-blue-400 to-indigo-500",
-    glow: "bg-indigo-500/20"
+    title: "Bin & Rack Location Management",
+    description: "Optimize pick paths and storage density with automated bin mapping, zone assignment, and aisle routing.",
+    icon: <Boxes className="w-5 h-5" />,
   },
   {
-    title: "Viral Captions",
-    description: "Generate catchy hooks and animated captions that keep viewers watching until the very end.",
-    icon: <BarChart3 className="w-6 h-6" />,
-    color: "from-purple-400 to-pink-500",
-    glow: "bg-purple-500/20"
+    title: "Inbound Receiving & Putaway",
+    description: "Fast-track stock receiving with purchase order matching, quality checks, and directed putaway suggestions.",
+    icon: <ScanLine className="w-5 h-5" />,
   },
   {
-    title: "Multi-Platform Export",
-    description: "One-click export to TikTok, Instagram Reels, and YouTube Shorts with perfect settings.",
-    icon: <Globe className="w-6 h-6" />,
-    color: "from-emerald-400 to-teal-500",
-    glow: "bg-emerald-500/20"
+    title: "Outbound Dispatch & Shipping",
+    description: "Streamline order picking, packing validation, shipping label generation, and carrier dispatch manifests.",
+    icon: <Truck className="w-5 h-5" />,
   },
   {
-    title: "Mobile Optimized",
-    description: "Designed for the vertical era. Your content will look native and premium on every phone.",
-    icon: <Smartphone className="w-6 h-6" />,
-    color: "from-red-400 to-rose-500",
-    glow: "bg-rose-500/20"
+    title: "Real-Time Analytics & Audit Logs",
+    description: "Gain actionable intelligence on warehouse throughput, turnover rates, shrinkage, and operator audit trails.",
+    icon: <BarChart3 className="w-5 h-5" />,
   },
   {
-    title: "Secure Processing",
-    description: "Your data is encrypted and processed on high-performance servers. We never use your videos for training.",
-    icon: <Shield className="w-6 h-6" />,
-    color: "from-cyan-400 to-blue-500",
-    glow: "bg-cyan-500/20"
+    title: "Enterprise Compliance & Security",
+    description: "Role-based authorization, automated inventory reconciliation, and compliance reporting across facilities.",
+    icon: <ShieldCheck className="w-5 h-5" />,
   }
 ];
 
-function FeatureCard({ feature, index }: { feature: typeof features[0], index: number }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, rotateX: 10 }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
-        delay: index * 0.1
-      }}
-      viewport={{ once: true, margin: "-100px" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="relative group p-8 rounded-[32px] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-colors duration-500 will-change-transform transform-gpu backface-hidden"
-    >
-      {/* Dynamic Glow Background */}
-      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl -z-10 rounded-full ${feature.glow}`} />
-
-      {/* Animated Border Beam */}
-      <div className="absolute inset-0 rounded-[32px] overflow-hidden">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_300deg,rgba(99,102,241,0.3)_360deg)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        />
-      </div>
-
-      <div style={{ transform: "translateZ(50px)" }} className="relative z-10">
-        <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
-          <div className="text-white drop-shadow-md">
-            {feature.icon}
-          </div>
-        </div>
-
-        <h3 className="text-2xl font-bold mb-4 group-hover:text-white transition-colors">
-          {feature.title}
-        </h3>
-        <p className="text-slate-400 leading-relaxed text-sm md:text-base group-hover:text-slate-300 transition-colors">
-          {feature.description}
-        </p>
-
-        <div className="mt-8 flex items-center gap-2 text-xs font-bold tracking-widest text-indigo-400 uppercase opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-          <span>Learn More</span>
-          <Sparkles className="w-3 h-3" />
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Features() {
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section className="py-20 bg-[#F8FAFC]">
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6"
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0077C8]/10 border border-[#0077C8]/20 text-[#0077C8] text-xs font-bold uppercase tracking-wider mb-4"
           >
-            <Sparkles className="w-4 h-4" />
-            Capabilities
+            Excel Jet Capabilities
           </motion.div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black mb-6 tracking-tight"
+            className="text-3xl md:text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight"
           >
-            Built for the <br />
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Attention Economy</span>
+            Engineered for High-Velocity Logistics
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-slate-400 text-lg leading-relaxed"
+            className="text-[#64748B] text-base leading-relaxed"
           >
-            Everything you need to scale your short-form presence without hiring a full-time editor.
+            A unified suite of tools designed to eliminate inventory discrepancies, reduce order fulfillment cycle time, and maximize warehouse efficiency.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <FeatureCard key={index} feature={feature} index={index} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {wmsFeatures.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:shadow-md transition-all group text-left"
+            >
+              <div className="w-10 h-10 bg-[#0F172A] text-white rounded-lg flex items-center justify-center mb-5 shadow-sm">
+                <div className="text-[#0077C8]">{feature.icon}</div>
+              </div>
+
+              <h3 className="text-lg font-bold text-[#0F172A] mb-2 group-hover:text-[#0077C8] transition-colors">
+                {feature.title}
+              </h3>
+              <p className="text-[#64748B] text-xs md:text-sm leading-relaxed">
+                {feature.description}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,74 +1,77 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Film, Search, Wand2, Plus } from "lucide-react";
+import { useState } from "react";
+import { Film, Search, Wand2, Plus, Check } from "lucide-react";
 
 export default function BRollSuggester() {
+  const [scanning, setScanning] = useState(false);
+  const [addedIds, setAddedIds] = useState<number[]>([]);
+
   const suggestions = [
-    { time: "00:04", prompt: "Dynamic city street view", source: "Pexels" },
-    { time: "00:12", prompt: "Person typing on laptop", source: "Storyblocks" },
-    { time: "00:25", prompt: "Abstract blue particles", source: "Unsplash" },
+    { id: 1, time: "00:04", prompt: "Zone A Automated Conveyor Inspection", source: "Camera #04" },
+    { id: 2, time: "00:12", prompt: "Forklift Rack Loading Video Feed", source: "Camera #12" },
+    { id: 3, time: "00:25", prompt: "Pallet Wrap Machine Audit Feed", source: "Camera #08" },
   ];
 
+  const handleScan = () => {
+    setScanning(true);
+    setTimeout(() => setScanning(false), 1200);
+  };
+
+  const handleToggleAdd = (id: number) => {
+    setAddedIds(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 h-full shadow-xl shadow-black/20 backdrop-blur-sm">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-        <div className="text-left">
-          <h3 className="text-xl font-black text-slate-100 flex items-center gap-2 uppercase italic tracking-tighter">
-            AI B-Roll <Film className="w-5 h-5 text-indigo-400" />
+    <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm text-left">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
+        <div>
+          <h3 className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
+            CCTV & Dock Feed Inspector <Film className="w-5 h-5 text-[#0077C8]" />
           </h3>
-          <p className="text-sm text-slate-400 mt-1 font-medium">Smart stock footage suggestions.</p>
+          <p className="text-xs text-[#64748B] mt-0.5">Live warehouse security & receiving camera feeds.</p>
         </div>
-        <button className="px-5 py-3 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 hover:bg-indigo-600/20 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-lg">
-          <Wand2 className="w-4 h-4" /> Auto-Analyze
+        <button 
+          onClick={handleScan}
+          disabled={scanning}
+          className="px-4 py-2 rounded-lg bg-[#0F172A] text-white hover:bg-[#1E293B] transition-all flex items-center gap-2 text-xs font-bold uppercase tracking-wider shadow-sm"
+        >
+          <Wand2 className={`w-4 h-4 text-[#0077C8] ${scanning ? 'animate-spin' : ''}`} /> 
+          {scanning ? "Scanning Feeds..." : "Auto-Scan Dock"}
         </button>
       </div>
 
-      <div className="space-y-6">
-        {suggestions.map((s, i) => (
-          <motion.div 
-            key={i}
-            whileHover={{ x: 10, backgroundColor: "rgba(15, 23, 42, 0.8)" }}
-            className="flex items-center gap-6 p-5 rounded-[32px] bg-slate-950/50 border border-slate-800 group hover:border-indigo-500/30 transition-all cursor-pointer"
-          >
-            <div className="w-28 aspect-video rounded-2xl bg-slate-900 border border-white/5 relative overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
-               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent group-hover:scale-110 transition-transform duration-1000" />
-               <Search className="w-6 h-6 text-slate-700 group-hover:text-indigo-500 group-hover:scale-125 transition-all" />
-               <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-black/60 text-[9px] font-black text-white backdrop-blur-md border border-white/10 uppercase tracking-widest">
-                 {s.time}
-               </div>
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-base font-black uppercase italic text-slate-100 tracking-tight leading-tight group-hover:text-indigo-400 transition-colors line-clamp-1">{s.prompt}</p>
-              <div className="flex items-center gap-3 mt-2">
-                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{s.source}</span>
-                 <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
-                 <span className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] cursor-pointer hover:text-indigo-400 transition-colors">Match Script</span>
+      <div className="space-y-4">
+        {suggestions.map((s) => {
+          const isAdded = addedIds.includes(s.id);
+          return (
+            <div 
+              key={s.id}
+              className="flex items-center gap-4 p-4 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#0077C8] transition-all"
+            >
+              <div className="w-24 aspect-video rounded-lg bg-[#0F172A] text-white flex items-center justify-center shrink-0 relative">
+                <Search className="w-5 h-5 text-[#0077C8]" />
+                <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/60 text-[9px] font-bold text-white">
+                  {s.time}
+                </div>
               </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-[#0F172A] truncate">{s.prompt}</p>
+                <span className="text-[10px] font-semibold text-[#0077C8] uppercase tracking-wider">{s.source}</span>
+              </div>
+              <button 
+                onClick={() => handleToggleAdd(s.id)}
+                className={`p-2 rounded-lg transition-all ${
+                  isAdded ? 'bg-[#16A34A] text-white' : 'bg-[#0F172A] text-white hover:bg-[#1E293B]'
+                }`}
+              >
+                {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+              </button>
             </div>
-            <button className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-xl shadow-indigo-600/30 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0 border border-indigo-400/30">
-              <Plus className="w-6 h-6" />
-            </button>
-          </motion.div>
-        ))}
-      </div>
-      
-      <div className="mt-10 pt-10 border-t border-slate-800">
-         <div className="flex items-center justify-between mb-8">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Visual Impact Timeline</span>
-            <span className="text-[10px] font-black text-indigo-400 uppercase italic tracking-widest bg-indigo-500/5 px-3 py-1 rounded-full border border-indigo-500/10">High Engagement Path</span>
-         </div>
-         <div className="flex items-end gap-1.5 h-16 px-2">
-            {[20, 45, 80, 40, 90, 60, 30, 70, 50, 40, 80, 60, 95, 45, 75, 40].map((h, i) => (
-              <motion.div 
-                key={i}
-                initial={{ height: 0 }}
-                animate={{ height: `${h}%` }}
-                transition={{ delay: i * 0.05, duration: 1 }}
-                className={`flex-1 rounded-full transition-all cursor-help ${h > 75 ? 'bg-indigo-500 shadow-[0_0_10px_rgba(79,70,229,0.5)]' : 'bg-slate-800 hover:bg-slate-700'}`}
-              />
-            ))}
-         </div>
+          );
+        })}
       </div>
     </div>
   );

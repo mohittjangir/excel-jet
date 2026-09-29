@@ -1,93 +1,74 @@
 "use client";
 
-import { Play, Sparkles, Zap, Flame } from "lucide-react";
+import { useState } from "react";
+import { Warehouse, Boxes, ScanLine, Truck, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function TrendingTemplates() {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+
   const templates = [
-    { id: 1, title: "Gaming Montage", category: "Gaming", icon: Zap, uses: "12.5K", gradient: "from-violet-600 to-indigo-600" },
-    { id: 2, title: "Vlog Intro (Cinematic)", category: "Lifestyle", icon: Sparkles, uses: "8.2K", gradient: "from-emerald-500 to-teal-500" },
-    { id: 3, title: "Podcast Highlights", category: "Educational", icon: Flame, uses: "15.1K", gradient: "from-orange-500 to-rose-500" },
-    { id: 4, title: "Product Showcase", category: "Business", icon: Sparkles, uses: "5.4K", gradient: "from-blue-500 to-cyan-500" },
+    { id: 1, title: "Cross-Docking Workflow", category: "Receiving", icon: Warehouse, uses: "12.5K Runs" },
+    { id: 2, title: "High-Density Bin Mapping", category: "Storage", icon: Boxes, uses: "8.2K Runs" },
+    { id: 3, title: "Fast-Track SKU Inspection", category: "Auditing", icon: ScanLine, uses: "15.1K Runs" },
+    { id: 4, title: "Automated Carrier Dispatch", category: "Logistics", icon: Truck, uses: "5.4K Runs" },
   ];
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.8
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } }
-  };
-
   return (
-    <div className="mt-16 pt-8 border-t border-slate-900/50">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="flex items-center justify-between mb-8"
-      >
-        <div>
-          <h3 className="text-2xl font-black flex items-center gap-2 tracking-tight text-slate-100 italic uppercase">
-            Trending Templates <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1.5 }}><Flame className="w-6 h-6 text-orange-500" /></motion.div>
+    <div className="mt-12 pt-8 border-t border-[#E2E8F0]">
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-left">
+          <h3 className="text-xl font-bold text-[#0F172A]">
+            Standard Warehouse Templates & Workflows
           </h3>
-          <p className="text-slate-400 mt-1 font-medium">Start your next viral hit with a proven format.</p>
+          <p className="text-xs text-[#64748B] mt-0.5">Pre-configured operational automation rules for warehouse staff.</p>
         </div>
-        <button className="text-sm font-bold text-indigo-400 hover:text-indigo-300 transition-colors bg-indigo-500/5 px-4 py-2 rounded-full border border-indigo-500/10 hover:border-indigo-500/30">
-          Browse library
+        <button 
+          onClick={() => alert("Library contains 45 pre-configured WMS operational rules.")}
+          className="text-xs font-bold text-[#0077C8] hover:text-[#0066B0] transition-colors bg-[#0077C8]/10 px-3 py-1.5 rounded-lg border border-[#0077C8]/20 uppercase tracking-wider"
+        >
+          Browse Library
         </button>
-      </motion.div>
+      </div>
 
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-      >
-        {templates.map((template) => (
-          <motion.div 
-            key={template.id} 
-            variants={item}
-            whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            className="group relative rounded-3xl bg-slate-900 border border-slate-800 overflow-hidden hover:border-indigo-500/40 transition-all hover:shadow-2xl hover:shadow-indigo-500/10 cursor-pointer flex flex-col h-[280px]"
-          >
-            {/* Visual Header */}
-            <div className={`h-3/5 w-full bg-gradient-to-br ${template.gradient} relative overflow-hidden flex items-center justify-center`}>
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-              
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"
-              />
-              
-              <div className="relative z-10 w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 shadow-2xl">
-                <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {templates.map((template) => {
+          const isSelected = selectedId === template.id;
+          return (
+            <motion.div 
+              key={template.id} 
+              whileHover={{ y: -4 }}
+              onClick={() => setSelectedId(template.id)}
+              className={`group relative rounded-xl bg-white border overflow-hidden transition-all shadow-sm hover:shadow-md cursor-pointer flex flex-col p-5 text-left ${
+                isSelected ? 'border-[#0077C8] ring-2 ring-[#0077C8]/20' : 'border-[#E2E8F0] hover:border-[#0077C8]'
+              }`}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="w-10 h-10 rounded-lg bg-[#0F172A] text-white flex items-center justify-center">
+                  <template.icon className="w-5 h-5 text-[#0077C8]" />
+                </div>
+                {isSelected && (
+                  <span className="p-1 rounded-full bg-[#16A34A] text-white text-[9px] font-bold">
+                    <Check className="w-3 h-3" />
+                  </span>
+                )}
               </div>
-            </div>
-            
-            {/* Content Area */}
-            <div className="p-5 flex-1 flex flex-col bg-slate-950/40 backdrop-blur-sm">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 flex items-center gap-1.5">
-                  <template.icon className="w-3 h-3 text-indigo-400" /> {template.category}
+              
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
+                  {template.category}
                 </span>
-                <span className="text-[10px] text-slate-400 font-bold bg-slate-900 px-2 py-0.5 rounded-full border border-slate-800">{template.uses} USES</span>
+                <span className="text-[9px] text-[#0077C8] font-bold bg-[#F8FAFC] px-2 py-0.5 rounded border border-[#E2E8F0]">
+                  {template.uses}
+                </span>
               </div>
-              <h4 className="font-black text-slate-100 text-lg leading-tight group-hover:text-indigo-400 transition-colors tracking-tight uppercase italic">{template.title}</h4>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+              <h4 className="font-bold text-[#0F172A] text-sm leading-tight group-hover:text-[#0077C8] transition-colors">
+                {template.title}
+              </h4>
+            </motion.div>
+          );
+        })}
+      </div>
     </div>
   );
 }

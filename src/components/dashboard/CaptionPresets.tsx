@@ -1,60 +1,66 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { MessageSquareQuote, Sparkles, Zap, Ghost } from "lucide-react";
+import { useState } from "react";
+import { MessageSquareQuote, ShieldCheck, Tag, Plus } from "lucide-react";
 
 export default function CaptionPresets() {
+  const [activeId, setActiveId] = useState(1);
+  const [customAdded, setCustomAdded] = useState(false);
+
   const presets = [
-    { id: 1, name: "The Hormozi", desc: "High-contrast, colorful, dynamic tracking.", icon: Zap, color: "text-amber-400", bg: "from-amber-500/20 to-orange-500/5", active: true },
-    { id: 2, name: "The MrBeast", desc: "Huge, expressive text with stroke effects.", icon: Sparkles, color: "text-blue-400", bg: "from-blue-500/20 to-cyan-500/5", active: false },
-    { id: 3, name: "The Minimalist", desc: "Clean, elegant, white sans-serif text.", icon: Ghost, color: "text-slate-400", bg: "from-slate-500/20 to-slate-500/5", active: false },
+    { id: 1, name: "GS1 Barcode Standard", desc: "High-contrast 1D/2D SKU label formatting.", icon: Tag },
+    { id: 2, name: "Manifest Summary", desc: "Itemized stock breakdown with serial IDs.", icon: ShieldCheck },
+    { id: 3, name: "Minimalist Packing Slip", desc: "Clean print-ready manifest template.", icon: MessageSquareQuote },
+    ...(customAdded ? [{ id: 4, name: "Custom Logistics Tag", desc: "User configured manifest template.", icon: Tag }] : [])
   ];
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 h-full shadow-xl shadow-black/20 backdrop-blur-sm">
-      <div className="mb-8 text-left">
-        <h3 className="text-xl font-black text-slate-100 flex items-center gap-2 uppercase italic tracking-tighter">
-          Caption Styles <MessageSquareQuote className="w-5 h-5 text-indigo-400" />
+    <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 h-full shadow-sm text-left">
+      <div className="mb-6 text-left">
+        <h3 className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
+          Manifest & Tag Styles <MessageSquareQuote className="w-5 h-5 text-[#0077C8]" />
         </h3>
-        <p className="text-sm text-slate-400 mt-1 font-medium">Pick a viral format for your subtitles.</p>
+        <p className="text-xs text-[#64748B] mt-0.5">Pick layout presets for inventory labels & dispatch slips.</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {presets.map((preset) => (
-          <motion.div 
-            key={preset.id}
-            whileHover={{ scale: 1.02, x: 5 }}
-            whileTap={{ scale: 0.98 }}
-            className={`relative p-5 rounded-[32px] border-2 transition-all cursor-pointer overflow-hidden group ${
-              preset.active ? 'border-indigo-500 bg-indigo-500/5 shadow-xl shadow-indigo-500/10' : 'border-slate-800 bg-slate-950/40 hover:border-slate-700'
-            }`}
-          >
-            <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${preset.bg} blur-3xl opacity-50 group-hover:opacity-80 transition-opacity -z-10`} />
-            
-            <div className="flex items-center gap-5">
-              <div className={`w-14 h-14 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform`}>
-                <preset.icon className={`w-7 h-7 ${preset.color}`} />
-              </div>
-              <div className="text-left">
-                <h4 className="font-black text-slate-100 uppercase italic tracking-tight text-lg">{preset.name}</h4>
-                <p className="text-xs text-slate-400 mt-1 font-medium leading-tight max-w-[180px]">{preset.desc}</p>
+      <div className="grid grid-cols-1 gap-3">
+        {presets.map((preset) => {
+          const isActive = activeId === preset.id;
+          return (
+            <div 
+              key={preset.id}
+              onClick={() => setActiveId(preset.id)}
+              className={`relative p-4 rounded-lg border transition-all cursor-pointer text-left ${
+                isActive ? 'border-[#0077C8] bg-[#0077C8]/5 shadow-xs' : 'border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#CBD5E1]'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-lg bg-[#0F172A] text-white flex items-center justify-center shrink-0`}>
+                  <preset.icon className="w-5 h-5 text-[#0077C8]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-bold text-[#0F172A] text-sm">{preset.name}</h4>
+                  <p className="text-xs text-[#64748B] mt-0.5 leading-tight">{preset.desc}</p>
+                </div>
+                {isActive && (
+                  <span className="px-2 py-0.5 rounded bg-[#0077C8] text-[9px] font-bold uppercase text-white tracking-wider shrink-0">
+                    Active
+                  </span>
+                )}
               </div>
             </div>
-            
-            {preset.active && (
-              <motion.div 
-                layoutId="active-indicator"
-                className="absolute right-6 top-6 px-3 py-1 rounded-full bg-indigo-600 text-[9px] font-black uppercase text-white tracking-[0.2em] shadow-lg shadow-indigo-600/20 border border-indigo-400/30"
-              >
-                Selected
-              </motion.div>
-            )}
-          </motion.div>
-        ))}
+          );
+        })}
       </div>
       
-      <button className="w-full mt-8 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-[10px] font-black uppercase tracking-widest text-slate-300 transition-all border border-slate-700 shadow-lg">
-        Create Custom Style
+      <button 
+        onClick={() => {
+          setCustomAdded(true);
+          setActiveId(4);
+        }}
+        className="w-full mt-6 py-2.5 rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-xs font-bold uppercase tracking-wider text-white transition-all shadow-sm flex items-center justify-center gap-1.5"
+      >
+        <Plus className="w-4 h-4" /> Create Custom Tag Style
       </button>
     </div>
   );

@@ -1,0 +1,509 @@
+{
+  "categories": [
+    {
+      "id": "cat-1",
+      "code": "CAT-STR",
+      "name": "Storage & Racking",
+      "description": "Industrial pallets and racking frames",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "cat-2",
+      "code": "CAT-[#0077C8]",
+      "name": "Packaging Materials",
+      "description": "Corrugated boxes and protective film",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "cat-3",
+      "code": "CAT-HW",
+      "name": "Hardware & Electronics",
+      "description": "Scanners, terminals & IoT sensors",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "cat-4",
+      "code": "CAT-LBL",
+      "name": "Labeling & Tags",
+      "description": "Thermal roll labels and bin tags",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    }
+  ],
+  "units": [
+    {
+      "id": "unit-1",
+      "code": "UNT-PCS",
+      "name": "Pieces",
+      "symbol": "pcs",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "unit-2",
+      "code": "UNT-CTN",
+      "name": "Cartons / Boxes",
+      "symbol": "ctn",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "unit-3",
+      "code": "UNT-PAL",
+      "name": "Pallets",
+      "symbol": "pal",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "unit-4",
+      "code": "UNT-KG",
+      "name": "Kilograms",
+      "symbol": "kg",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    }
+  ],
+  "warehouses": [
+    {
+      "id": "wh-1",
+      "code": "WH-CENTRAL",
+      "name": "Central Metro Distribution Hub",
+      "address": "Building A, Logistics Park, Metro City",
+      "manager": "Admin Manager",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "wh-2",
+      "code": "WH-NORTH",
+      "name": "North Regional Logistics Facility",
+      "address": "North Express Highway, Gate 4",
+      "manager": "Rahul Sharma",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc-1",
+      "warehouseName": "Central Metro Distribution Hub",
+      "zone": "Zone A",
+      "aisle": "02",
+      "bin": "B-12",
+      "code": "ZA-A02-B12",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "loc-2",
+      "warehouseName": "Central Metro Distribution Hub",
+      "zone": "Zone B",
+      "aisle": "04",
+      "bin": "C-08",
+      "code": "ZB-A04-C08",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    },
+    {
+      "id": "loc-3",
+      "warehouseName": "North Regional Logistics Facility",
+      "zone": "Zone C",
+      "aisle": "01",
+      "bin": "A-01",
+      "code": "ZC-A01-A01",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.522Z"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "sup-1",
+      "code": "SUP-8801",
+      "name": "Apex Industrial Supplies Ltd",
+      "contactPerson": "John Reynolds",
+      "email": "orders@apexindustrial.com",
+      "phone": "+1 800 555 0199",
+      "address": "100 Logistics Way, Industrial Zone",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.523Z"
+    },
+    {
+      "id": "sup-2",
+      "code": "SUP-9942",
+      "name": "Global Packaging Materials Corp",
+      "contactPerson": "Elena Rostova",
+      "email": "sales@globalpack.com",
+      "phone": "+1 800 555 0244",
+      "address": "450 Packaging Blvd, Freight City",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.523Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-1",
+      "code": "CUST-104",
+      "name": "Metro Retail Fulfillment Network",
+      "contactPerson": "Sarah Jenkins",
+      "email": "receiving@metroretail.com",
+      "phone": "+1 800 555 0311",
+      "address": "78 Commerce St, Distribution Park",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.523Z"
+    },
+    {
+      "id": "cust-2",
+      "code": "CUST-208",
+      "name": "OmniChannel Logistics Group",
+      "contactPerson": "Marcus Vance",
+      "email": "dispatch@omnichannel.com",
+      "phone": "+1 800 555 0422",
+      "address": "12 Logistics Pkwy, Suite 400",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T11:52:52.523Z"
+    }
+  ],
+  "products": [
+    {
+      "sku": "SKU-401333",
+      "name": "asd",
+      "category": "Storage & Racking",
+      "quantity": 10,
+      "minStock": 10,
+      "price": 100,
+      "location": "Zone A - Aisle 01",
+      "id": "prod-1790676401415",
+      "status": "Low Stock",
+      "createdAt": "2026-09-29T10:06:41.415Z",
+      "updatedAt": "2026-09-29T12:21:40.216Z"
+    },
+    {
+      "id": "prod-1",
+      "sku": "SKU-PAL-9042",
+      "name": "Industrial Steel Pallet Racks",
+      "category": "Storage & Racking",
+      "quantity": 248,
+      "minStock": 20,
+      "status": "In Stock",
+      "price": 250,
+      "location": "Zone A - Aisle 02",
+      "createdAt": "2026-09-19T09:48:13.637Z",
+      "updatedAt": "2026-09-29T10:10:21.020Z"
+    },
+    {
+      "id": "prod-2",
+      "sku": "SKU-[#0077C8]-BOX",
+      "name": "Heavy-Duty Corrugated Cartons",
+      "category": "Packaging Materials",
+      "quantity": 12,
+      "minStock": 25,
+      "status": "Low Stock",
+      "price": 15,
+      "location": "Zone B - Aisle 04",
+      "createdAt": "2026-09-21T09:48:13.638Z",
+      "updatedAt": "2026-09-29T09:48:13.638Z"
+    },
+    {
+      "id": "prod-3",
+      "sku": "SKU-SCN-7701",
+      "name": "Wireless Handheld Barcode Scanners",
+      "category": "Hardware & Electronics",
+      "quantity": 2,
+      "minStock": 5,
+      "status": "Low Stock",
+      "price": 320,
+      "location": "Zone C - Cabinet 01",
+      "createdAt": "2026-09-14T09:48:13.638Z",
+      "updatedAt": "2026-09-29T11:52:52.533Z"
+    },
+    {
+      "id": "prod-4",
+      "sku": "SKU-[#16A34A]-LBL",
+      "name": "Thermal Transfer SKU Labels (Roll of 1000)",
+      "category": "Labeling & Tags",
+      "quantity": 350,
+      "minStock": 50,
+      "status": "In Stock",
+      "price": 45,
+      "location": "Zone D - Shelf 08",
+      "createdAt": "2026-09-24T09:48:13.638Z",
+      "updatedAt": "2026-09-29T09:48:13.638Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx-1790684500216",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Customer Dispatch",
+      "referenceNo": "ORD-500216",
+      "notes": "Outbound stock dispatched",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-29T12:21:40.216Z"
+    },
+    {
+      "id": "tx-1790682772533",
+      "productId": "prod-3",
+      "productName": "Wireless Handheld Barcode Scanners",
+      "sku": "SKU-SCN-7701",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-772533",
+      "notes": "Inbound stock received",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-29T11:52:52.533Z"
+    },
+    {
+      "id": "tx-1790676621020",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_IN",
+      "quantity": 100,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-621020",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T10:10:21.020Z"
+    },
+    {
+      "id": "tx-1790676551240",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-551240",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T10:09:11.240Z"
+    },
+    {
+      "id": "tx-1790676411041",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-411041",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T10:06:51.041Z"
+    },
+    {
+      "id": "tx-1790676408451",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Dispatch / Customer",
+      "referenceNo": "DISP-408451",
+      "notes": "",
+      "user": "Excel Jet Operator",
+      "createdAt": "2026-09-29T10:06:48.451Z"
+    },
+    {
+      "id": "tx-1790676394712",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Dispatch / Customer",
+      "referenceNo": "DISP-394712",
+      "notes": "",
+      "user": "Excel Jet Operator",
+      "createdAt": "2026-09-29T10:06:34.712Z"
+    },
+    {
+      "id": "tx-1790676390612",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-390612",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T10:06:30.612Z"
+    },
+    {
+      "id": "tx-1790675928467",
+      "productId": "prod-3",
+      "productName": "Wireless Handheld Barcode Scanners",
+      "sku": "SKU-SCN-7701",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-928467",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T09:58:48.467Z"
+    },
+    {
+      "id": "tx-1790675604399",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Dispatch / Customer",
+      "referenceNo": "DISP-604399",
+      "notes": "",
+      "user": "Excel Jet Operator",
+      "createdAt": "2026-09-29T09:53:24.399Z"
+    },
+    {
+      "id": "tx-1790675592445",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-592445",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T09:53:12.445Z"
+    },
+    {
+      "id": "tx-1790675509504",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Dispatch / Customer",
+      "referenceNo": "DISP-509504",
+      "notes": "",
+      "user": "Excel Jet Operator",
+      "createdAt": "2026-09-29T09:51:49.504Z"
+    },
+    {
+      "id": "tx-1790675500754",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Received",
+      "referenceNo": "REF-500754",
+      "notes": "",
+      "user": "Excel Jet Manager",
+      "createdAt": "2026-09-29T09:51:40.754Z"
+    },
+    {
+      "id": "tx-1001",
+      "productId": "prod-1",
+      "productName": "Industrial Steel Pallet Racks",
+      "sku": "SKU-PAL-9042",
+      "type": "STOCK_IN",
+      "quantity": 50,
+      "sourceDestination": "Global Steel Supplies Inc.",
+      "referenceNo": "PO-2026-8841",
+      "notes": "Received batch into Zone A",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-29T07:48:13.638Z"
+    },
+    {
+      "id": "tx-1002",
+      "productId": "prod-2",
+      "productName": "Heavy-Duty Corrugated Cartons",
+      "sku": "SKU-[#0077C8]-BOX",
+      "type": "STOCK_OUT",
+      "quantity": 30,
+      "sourceDestination": "Logistics Hub West",
+      "referenceNo": "DISP-2026-4412",
+      "notes": "Dispatched for customer order #9920",
+      "user": "Floor Staff",
+      "createdAt": "2026-09-29T04:48:13.638Z"
+    }
+  ],
+  "adjustments": [
+    {
+      "id": "adj-1",
+      "productId": "prod-2",
+      "productName": "Heavy-Duty Corrugated Cartons",
+      "sku": "SKU-[#0077C8]-BOX",
+      "type": "DAMAGE_WRITE_OFF",
+      "quantity": 5,
+      "oldQuantity": 17,
+      "newQuantity": 12,
+      "reason": "Water damage during transit",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-28T11:52:52.523Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log-1790684500216-913",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_OUT_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Dispatched -1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T12:21:40.216Z"
+    },
+    {
+      "id": "log-1790682772533-352",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-SCN-7701",
+      "createdAt": "2026-09-29T11:52:52.533Z"
+    },
+    {
+      "id": "log-1",
+      "user": "Admin Manager",
+      "role": "ADMIN",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received 50 units of Industrial Steel Pallet Racks (SKU-PAL-9042)",
+      "createdAt": "2026-09-29T09:52:52.523Z"
+    },
+    {
+      "id": "log-2",
+      "user": "Rahul Sharma",
+      "role": "STAFF",
+      "action": "STOCK_OUT_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Dispatched 30 units of Heavy-Duty Corrugated Cartons (SKU-[#0077C8]-BOX)",
+      "createdAt": "2026-09-29T06:52:52.523Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-admin",
+      "name": "Mohit (Admin)",
+      "email": "admin@exceljetwms.com",
+      "role": "ADMIN",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T09:48:13.638Z"
+    },
+    {
+      "id": "usr-staff",
+      "name": "Aayush (Staff)",
+      "email": "staff@exceljetwms.com",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T09:48:13.638Z"
+    }
+  ],
+  "cartons": [
+    {
+      "id": "carton-1",
+      "cartonCode": "CTN-88410-A",
+      "productName": "Industrial Steel Pallet Racks",
+      "quantity": 50,
+      "supplier": "Global Steel Supplies",
+      "status": "In Storage",
+      "notes": "Pallet batch 01 stored in Zone A",
+      "createdAt": "2026-09-28T09:48:13.638Z"
+    }
+  ]
+}

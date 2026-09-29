@@ -1,18 +1,10 @@
 import CustomAuthWrapper from "@/components/CustomAuthWrapper";
 import { defaultMetadata } from "./metadata";
-import { Geist, Geist_Mono } from "next/font/google";
 import ScrollOptimizer from "@/components/ScrollOptimizer";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = { variable: "--font-geist-sans" };
+const geistMono = { variable: "--font-geist-mono" };
 
 export const metadata = defaultMetadata;
 
@@ -22,11 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} selection:bg-indigo-500/30`}>
-      <body className="antialiased min-h-screen bg-slate-950 text-slate-50 overflow-x-hidden">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} selection:bg-[#16A3A3]/20`}>
+      <body className="antialiased min-h-screen bg-[#F5F7FA] text-[#1F2937] overflow-x-hidden">
         <ScrollOptimizer />
         <CustomAuthWrapper>
-          <div className="relative flex min-h-screen flex-col isolate">
+          <div className="relative flex min-h-screen flex-col isolate bg-[#F5F7FA] text-[#1F2937]">
              {children}
           </div>
         </CustomAuthWrapper>

@@ -1,87 +1,55 @@
 "use client";
 
-import { Check, Plus, Camera, Share2, Play } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Check, Plus, HardDrive, Network, Layers } from "lucide-react";
 
 export default function SocialIntegrations() {
-  const platforms = [
-    { name: "YouTube", icon: Play, color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20", connected: true },
-    { name: "TikTok", icon: null, customIcon: "🎵", color: "text-white", bg: "bg-slate-800", border: "border-slate-700", connected: false },
-    { name: "Instagram", icon: Camera, color: "text-pink-500", bg: "bg-pink-500/10", border: "border-pink-500/20", connected: false },
-    { name: "X (Twitter)", icon: Share2, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-400/20", connected: true },
-  ];
+  const [integrations, setIntegrations] = useState([
+    { id: 1, name: "SAP ERP Connector", icon: HardDrive, connected: true },
+    { id: 2, name: "NetSuite Integration", icon: Network, connected: false },
+    { id: 3, name: "Oracle Logistics API", icon: Layers, connected: false },
+    { id: 4, name: "FedEx / UPS Carrier API", icon: HardDrive, connected: true },
+  ]);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.6
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, x: -10 },
-    show: { opacity: 1, x: 0 }
+  const toggleIntegration = (id: number) => {
+    setIntegrations(prev => prev.map(item => 
+      item.id === id ? { ...item, connected: !item.connected } : item
+    ));
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-      className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 h-full flex flex-col shadow-xl shadow-black/20 backdrop-blur-sm"
-    >
-      <div className="mb-8">
-        <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-          Connect Accounts
+    <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm text-left">
+      <div className="mb-6">
+        <h3 className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
+          Connected Systems & APIs
         </h3>
-        <p className="text-sm text-slate-400 mt-1 font-medium">Export directly to your social platforms.</p>
+        <p className="text-xs text-[#64748B] mt-0.5">Integrate warehouse operations with enterprise ERPs.</p>
       </div>
 
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="flex-1 space-y-4 flex flex-col justify-center"
-      >
-        {platforms.map((platform, i) => (
-          <motion.div 
-            key={i} 
-            variants={item}
-            whileHover={{ x: 5, backgroundColor: "rgba(15, 23, 42, 0.6)" }}
-            className={`flex items-center justify-between p-4 rounded-2xl border ${platform.connected ? 'border-slate-800 bg-slate-950/40' : 'border-slate-800 bg-slate-900/40'} hover:border-indigo-500/30 transition-all group`}
+      <div className="space-y-3">
+        {integrations.map((item) => (
+          <div 
+            key={item.id} 
+            className="flex items-center justify-between p-3.5 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#0077C8] transition-all"
           >
-            <div className="flex items-center gap-4">
-              <motion.div 
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className={`w-10 h-10 rounded-xl flex items-center justify-center ${platform.bg} ${platform.border} border shadow-inner`}
-              >
-                {platform.icon ? (
-                  <platform.icon className={`w-5 h-5 ${platform.color}`} />
-                ) : (
-                  <span className="text-lg">{platform.customIcon}</span>
-                )}
-              </motion.div>
-              <span className="font-bold text-slate-200 group-hover:text-white transition-colors">{platform.name}</span>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#0F172A] text-white flex items-center justify-center">
+                <item.icon className="w-4 h-4 text-[#0077C8]" />
+              </div>
+              <span className="font-bold text-xs text-[#0F172A]">{item.name}</span>
             </div>
             
-            <motion.button 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className={`flex items-center justify-center w-9 h-9 rounded-full transition-all shadow-lg ${
-              platform.connected 
-                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                : 'bg-slate-800 text-slate-400 hover:bg-indigo-600 hover:text-white border border-slate-700'
-            }`}>
-              {platform.connected ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-            </motion.button>
-          </motion.div>
+            <button 
+              onClick={() => toggleIntegration(item.id)}
+              className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                item.connected ? 'bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/30 hover:bg-[#16A34A]/20' : 'bg-white text-[#64748B] border border-[#E2E8F0] hover:text-[#0F172A] hover:border-[#0077C8]'
+              }`}
+            >
+              {item.connected ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            </button>
+          </div>
         ))}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

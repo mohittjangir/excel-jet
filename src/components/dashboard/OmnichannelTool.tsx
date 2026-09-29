@@ -1,60 +1,90 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Share2, Link2, FileText, Wand2, Copy, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Share2, Link2, FileText, Wand2, Copy, Check, ArrowRight } from "lucide-react";
 
 export default function OmnichannelTool() {
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exported, setExported] = useState(false);
+
   const formats = [
-    { name: "X (Twitter) Thread", icon: Share2, color: "text-sky-400", bg: "bg-sky-400/10", count: "5 Tweets" },
-    { name: "LinkedIn Post", icon: Link2, color: "text-blue-500", bg: "bg-blue-500/10", count: "450 Words" },
-    { name: "Blog Summary", icon: FileText, color: "text-emerald-400", bg: "bg-emerald-400/10", count: "800 Words" },
+    { name: "EDI 856 Shipment Notice", icon: Share2, count: "5 Data Segments" },
+    { name: "ERP Inventory Ledger", icon: Link2, count: "450 Records" },
+    { name: "Carrier Bill of Lading", icon: FileText, count: "Standard PDF" },
   ];
 
+  const handleCopy = (index: number) => {
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
+  const handleExport = () => {
+    setExporting(true);
+    setTimeout(() => {
+      setExporting(false);
+      setExported(true);
+      setTimeout(() => setExported(false), 3000);
+    }, 1500);
+  };
+
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl shadow-black/20 backdrop-blur-sm">
-      <div className="mb-8 text-left">
-        <h3 className="text-xl font-black text-slate-100 flex items-center gap-2 uppercase italic tracking-tighter">
-          Omnichannel <Wand2 className="w-5 h-5 text-indigo-400" />
+    <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm text-left">
+      <div className="mb-6 text-left">
+        <h3 className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
+          Omnichannel Data Sync <Wand2 className="w-5 h-5 text-[#0077C8]" />
         </h3>
-        <p className="text-sm text-slate-400 mt-1 font-medium">Turn video into text instantly.</p>
+        <p className="text-xs text-[#64748B] mt-0.5">Export stock data to EDI, ERP & Logistics partners.</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {formats.map((f, i) => (
-          <motion.div 
+          <div 
             key={i}
-            whileHover={{ x: 10, backgroundColor: "rgba(15, 23, 42, 0.8)" }}
-            className="p-6 rounded-[32px] bg-slate-950/50 border border-slate-800 flex items-center justify-between group hover:border-indigo-500/30 transition-all cursor-pointer"
+            className="p-4 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between group hover:border-[#0077C8] transition-all cursor-pointer"
           >
-            <div className="flex items-center gap-5">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${f.bg} border border-white/5 shadow-inner group-hover:scale-110 transition-transform`}>
-                <f.icon className={`w-7 h-7 ${f.color}`} />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#0F172A] text-white flex items-center justify-center shrink-0">
+                <f.icon className="w-5 h-5 text-[#0077C8]" />
               </div>
               <div className="text-left">
-                <h4 className="text-base font-black text-slate-200 group-hover:text-white transition-colors uppercase italic tracking-tight">{f.name}</h4>
-                <p className="text-[10px] font-black uppercase text-indigo-500 tracking-[0.2em] mt-1">{f.count}</p>
+                <h4 className="text-xs font-bold text-[#0F172A]">{f.name}</h4>
+                <p className="text-[10px] font-semibold text-[#0077C8] uppercase tracking-wider">{f.count}</p>
               </div>
             </div>
-            <button className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-500 hover:text-white hover:bg-indigo-600 hover:border-indigo-400 transition-all opacity-0 group-hover:opacity-100 shadow-lg">
-              <Copy className="w-5 h-5" />
+            <button 
+              onClick={() => handleCopy(i)}
+              className={`p-2 rounded border text-xs font-bold flex items-center gap-1 transition-all ${
+                copiedIndex === i 
+                  ? 'bg-[#16A34A] text-white border-[#16A34A]' 
+                  : 'bg-white border-[#E2E8F0] text-[#64748B] hover:text-[#0F172A] hover:border-[#0077C8]'
+              }`}
+            >
+              {copiedIndex === i ? <><Check className="w-4 h-4" /> Copied!</> : <Copy className="w-4 h-4" />}
             </button>
-          </motion.div>
+          </div>
         ))}
       </div>
       
-      <div className="mt-10 p-6 rounded-[32px] bg-indigo-600/10 border border-indigo-500/20 text-center relative overflow-hidden group">
-         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-3xl -z-10 group-hover:scale-150 transition-transform duration-1000" />
+      <div className="mt-6 p-4 rounded-lg bg-[#0F172A] text-white text-center">
+         <p className="text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-1">Target Warehouse Batch</p>
+         <h4 className="text-sm font-extrabold text-white truncate">Stock Inbound Manifest #8841</h4>
          
-         <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-3">Target Project</p>
-         <h4 className="text-xl font-black italic uppercase text-white truncate px-4">Tech Review Vlog #42</h4>
-         
-         <motion.button 
-           whileHover={{ scale: 1.02 }}
-           whileTap={{ scale: 0.98 }}
-           className="mt-6 w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-indigo-600/40 border border-indigo-400/30 flex items-center justify-center gap-3"
+         <button 
+           onClick={handleExport}
+           disabled={exporting}
+           className="mt-4 w-full py-2.5 rounded-lg bg-[#0077C8] hover:bg-[#0066B0] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2"
          >
-           Generate All Assets <ArrowRight className="w-4 h-4" />
-         </motion.button>
+           {exporting ? (
+             <span>Packaging EDI Manifest...</span>
+           ) : exported ? (
+             <span className="text-[#16A34A] font-bold flex items-center gap-1">
+               <Check className="w-4 h-4" /> All Manifest Documents Exported!
+             </span>
+           ) : (
+             <>Export All Documents <ArrowRight className="w-4 h-4" /></>
+           )}
+         </button>
       </div>
     </div>
   );
