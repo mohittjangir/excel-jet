@@ -37,22 +37,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const savedUser = localStorage.getItem("exceljet_wms_user");
     const isLoggedOut = localStorage.getItem("exceljet_wms_logged_out");
 
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
-      } catch (e) {
+      } catch (_err) {
         localStorage.removeItem("exceljet_wms_user");
       }
     } else if (!isLoggedOut) {
-      // First visit default to Admin
       const defaultUser = PRESET_USERS["admin@warehouse.com"].user;
       setUser(defaultUser);
       localStorage.setItem("exceljet_wms_user", JSON.stringify(defaultUser));
     }
+    setMounted(true);
   }, []);
 
   const login = (email: string, pass: string) => {

@@ -18,23 +18,24 @@ export default function ReportsModule() {
   });
   const [loading, setLoading] = useState(false);
 
-  const loadReports = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch('/api/wms/reports');
-      if (res.ok) {
-        const data = await res.json();
-        setReports(data);
-      }
-    } catch (e) {
-      console.error("Failed to load reports", e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadReports();
+    let isSubscribed = true;
+    const fetchReports = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch('/api/wms/reports');
+        if (res.ok && isSubscribed) {
+          const data = await res.json();
+          setReports(data);
+        }
+      } catch (e) {
+        console.error("Failed to load reports", e);
+      } finally {
+        if (isSubscribed) setLoading(false);
+      }
+    };
+    fetchReports();
+    return () => { isSubscribed = false; };
   }, []);
 
   const totalInventoryValue = reports.stockReport.reduce((acc, r) => acc + (r.totalValue || 0), 0);

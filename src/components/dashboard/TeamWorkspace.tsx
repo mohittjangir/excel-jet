@@ -16,7 +16,7 @@ export default function TeamWorkspace() {
 
   const isAdmin = user?.role === 'ADMIN';
 
-  const loadUsers = async () => {
+  const refreshUsers = async () => {
     try {
       const res = await fetch('/api/wms/users');
       if (res.ok) {
@@ -29,7 +29,7 @@ export default function TeamWorkspace() {
   };
 
   useEffect(() => {
-    loadUsers();
+    refreshUsers();
   }, []);
 
   const handleAddUser = async (e: React.FormEvent) => {
@@ -53,7 +53,7 @@ export default function TeamWorkspace() {
         setName("");
         setEmail("");
         setShowForm(false);
-        loadUsers();
+        refreshUsers();
       } else {
         const err = await res.json();
         setMessage(err.error || "Failed to add operator");

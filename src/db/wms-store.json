@@ -164,14 +164,15 @@
       "sku": "SKU-401333",
       "name": "asd",
       "category": "Storage & Racking",
-      "quantity": 11,
+      "quantity": 19,
       "minStock": 10,
-      "price": 100,
+      "price": 0,
       "location": "Zone A - Aisle 01",
       "id": "prod-1790676401415",
       "status": "In Stock",
       "createdAt": "2026-09-29T10:06:41.415Z",
-      "updatedAt": "2026-09-29T13:20:22.944Z"
+      "updatedAt": "2026-09-30T06:40:13.857Z",
+      "warehouse": "Central Metro Distribution Hub"
     },
     {
       "id": "prod-1",
@@ -227,6 +228,110 @@
     }
   ],
   "transactions": [
+    {
+      "id": "tx-1790750413857",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-413857",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:40:13.857Z"
+    },
+    {
+      "id": "tx-1790750386629",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-386629",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:39:46.629Z"
+    },
+    {
+      "id": "tx-1790749781573",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-781573",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01 | Unit Cost: $0",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:29:41.573Z"
+    },
+    {
+      "id": "tx-1790749773181",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-773181",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:29:33.181Z"
+    },
+    {
+      "id": "tx-1790749638627",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-638627",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:27:18.627Z"
+    },
+    {
+      "id": "tx-1790749637760",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-637760",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:27:17.760Z"
+    },
+    {
+      "id": "tx-1790749635203",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-635203",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:27:15.203Z"
+    },
+    {
+      "id": "tx-1790749610609",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-610609",
+      "notes": "Loc: Central Metro Distribution Hub - Zone A - Aisle 01",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-30T06:26:50.609Z"
+    },
     {
       "id": "tx-1790688022944",
       "productId": "prod-1790676401415",
@@ -504,6 +609,78 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1790750413857-120",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $0)",
+      "createdAt": "2026-09-30T06:40:13.857Z"
+    },
+    {
+      "id": "log-1790750386629-994",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $0)",
+      "createdAt": "2026-09-30T06:39:46.629Z"
+    },
+    {
+      "id": "log-1790749781573-420",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $0)",
+      "createdAt": "2026-09-30T06:29:41.573Z"
+    },
+    {
+      "id": "log-1790749773181-96",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $100)",
+      "createdAt": "2026-09-30T06:29:33.181Z"
+    },
+    {
+      "id": "log-1790749638627-517",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $100)",
+      "createdAt": "2026-09-30T06:27:18.627Z"
+    },
+    {
+      "id": "log-1790749637760-126",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $100)",
+      "createdAt": "2026-09-30T06:27:17.760Z"
+    },
+    {
+      "id": "log-1790749635203-157",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $100)",
+      "createdAt": "2026-09-30T06:27:15.203Z"
+    },
+    {
+      "id": "log-1790749610609-699",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333 (Location: Zone A - Aisle 01, Price: $100)",
+      "createdAt": "2026-09-30T06:26:50.609Z"
+    },
     {
       "id": "log-1790688022944-357",
       "user": "Admin Manager",

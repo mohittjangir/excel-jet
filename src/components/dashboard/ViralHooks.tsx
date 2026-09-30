@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Copy, TrendingUp, HelpCircle } from "lucide-react";
 
 export default function ViralHooks() {
