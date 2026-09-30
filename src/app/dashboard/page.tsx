@@ -299,6 +299,7 @@ function DashboardContent() {
       case 'overview':
         return (
           <motion.div 
+            key="overview"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -540,26 +541,26 @@ function DashboardContent() {
         );
       case 'masters':
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div key="masters" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
             <MastersModule />
           </motion.div>
         );
       case 'inventory':
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div key="inventory" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
             <InventoryModule />
           </motion.div>
         );
       case 'reports':
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div key="reports" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
             <ReportsModule />
           </motion.div>
         );
       case 'admin':
         if (!isAdmin) {
           return (
-            <div className="bg-white border border-[#E2E8F0] rounded-xl p-8 shadow-sm text-center">
+            <div key="admin-forbidden" className="bg-white border border-[#E2E8F0] rounded-xl p-8 shadow-sm text-center">
               <ShieldAlert className="w-12 h-12 text-[#F59E0B] mx-auto mb-3" />
               <h3 className="text-lg font-bold text-[#0F172A] mb-1">Admin Access Required</h3>
               <p className="text-xs text-[#64748B]">System administration and audit log views are restricted to Admin personnel.</p>
@@ -567,20 +568,20 @@ function DashboardContent() {
           );
         }
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div key="admin" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
             <AdministrationModule />
           </motion.div>
         );
       case 'growth':
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+          <motion.div key="growth" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
             <PerformanceChart />
             <TrendingTemplates />
           </motion.div>
         );
       case 'production':
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+          <motion.div key="production" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
             <ContentCalendar />
             <BRollSuggester />
           </motion.div>
@@ -688,8 +689,8 @@ function DashboardContent() {
                   onChange={e => setSelectedProductId(e.target.value)}
                   className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
                 >
-                  {products.map(p => (
-                    <option key={p.id} value={p.id}>{p.name} ({p.sku}) — Current: {p.quantity}</option>
+                  {products.map((p, idx) => (
+                    <option key={p.id || `in-prod-${idx}`} value={p.id}>{p.name} ({p.sku}) — Current: {p.quantity}</option>
                   ))}
                 </select>
               </div>
