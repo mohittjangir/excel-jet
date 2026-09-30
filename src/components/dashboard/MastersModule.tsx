@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Database, Plus, Trash2, Search, Building2, MapPin, Truck, Users, Tag, Scale, CheckCircle2, AlertTriangle, X } from "lucide-react";
+import { Database, Plus, Trash2, Search, Building2, MapPin, Truck, Users, Tag, Scale, CheckCircle2, AlertTriangle, X, ArrowDownLeft } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import CustomizableStockInForm from "./CustomizableStockInForm";
 
-type MasterType = 'categories' | 'units' | 'warehouses' | 'locations' | 'suppliers' | 'customers';
+type MasterType = 'categories' | 'units' | 'warehouses' | 'locations' | 'suppliers' | 'customers' | 'stock-in';
 
 export default function MastersModule() {
   const { user } = useAuth();
@@ -25,6 +26,7 @@ export default function MastersModule() {
   const [field4, setField4] = useState("");
 
   const loadData = async (tab: MasterType) => {
+    if (tab === 'stock-in') return;
     try {
       setLoading(true);
       const res = await fetch(`/api/wms/masters/${tab}`);
@@ -137,19 +139,21 @@ export default function MastersModule() {
     { id: 'locations', label: 'Locations', icon: MapPin },
     { id: 'suppliers', label: 'Suppliers', icon: Truck },
     { id: 'customers', label: 'Customers', icon: Users },
+    { id: 'stock-in', label: 'Customizable Stock In', icon: ArrowDownLeft },
   ];
 
   return (
-    <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm text-left space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-6 text-left">
+      {/* Sub-tab navigation */}
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-sm flex items-center justify-between gap-4 flex-wrap">
         <div>
-          <h3 className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
-            Master Data Directory <Database className="w-5 h-5 text-[#0077C8]" />
+          <h3 className="text-base font-extrabold text-[#0F172A] flex items-center gap-2">
+            Master Data & Receiving Directory <Database className="w-4 h-4 text-[#0077C8]" />
           </h3>
-          <p className="text-xs text-[#64748B] mt-0.5">Manage master entities: categories, units, warehouses, locations & entities.</p>
+          <p className="text-xs text-[#64748B] mt-0.5">Manage master entities or configure your drag & drop Stock In receiving form.</p>
         </div>
 
-        {isAdmin && (
+        {isAdmin && activeTab !== 'stock-in' && (
           <button 
             onClick={() => { resetForm(); setFeedback(null); setShowModal(true); }}
             className="px-4 py-2 bg-[#0077C8] hover:bg-[#0066B0] text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm transition-all"
@@ -159,7 +163,6 @@ export default function MastersModule() {
         )}
       </div>
 
-      {/* Sub-tab navigation */}
       <div className="flex overflow-x-auto gap-2 border-b border-[#E2E8F0] pb-2">
         {masterTabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -175,13 +178,20 @@ export default function MastersModule() {
             >
               <tab.icon className={`w-4 h-4 ${isActive ? 'text-[#0077C8]' : 'text-[#64748B]'}`} />
               {tab.label}
-              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-slate-200 text-[#64748B]'}`}>
-                {activeTab === tab.id ? filteredItems.length : ''}
-              </span>
+              {tab.id !== 'stock-in' && (
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-slate-200 text-[#64748B]'}`}>
+                  {activeTab === tab.id ? filteredItems.length : ''}
+                </span>
+              )}
             </button>
           );
         })}
       </div>
+
+      {activeTab === 'stock-in' ? (
+        <CustomizableStockInForm />
+      ) : (
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm text-left space-y-6">
 
       {feedback && (
         <div className={`p-3 rounded-lg text-xs font-bold flex items-center justify-between ${
@@ -457,6 +467,8 @@ export default function MastersModule() {
               </div>
             </form>
           </div>
+        </div>
+      )}
         </div>
       )}
     </div>
