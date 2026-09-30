@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { ArrowDownLeft, GripVertical, Eye, EyeOff, ArrowUp, ArrowDown, RotateCcw, CheckCircle2, AlertTriangle, X, Save } from "lucide-react";
+import { ArrowDownLeft, GripVertical, Eye, EyeOff, ArrowUp, ArrowDown, RotateCcw, CheckCircle2, AlertTriangle, X, Plus, Trash2, Sliders, Type, Hash, AlignLeft } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export interface FieldConfig {
@@ -11,6 +11,7 @@ export interface FieldConfig {
   visible: boolean;
   type: 'productSelect' | 'number' | 'warehouseSelect' | 'locationSelect' | 'supplierSelect' | 'text' | 'textarea';
   placeholder?: string;
+  isCustom?: boolean;
 }
 
 const DEFAULT_FIELDS: FieldConfig[] = [
@@ -24,7 +25,7 @@ const DEFAULT_FIELDS: FieldConfig[] = [
   { id: 'notes', label: 'Notes / Inspection Status', required: false, visible: true, type: 'textarea', placeholder: 'Inbound inspection passed...' },
 ];
 
-const STORAGE_KEY = 'excel_jet_wms_stock_in_layout_v1';
+const STORAGE_KEY = 'excel_jet_wms_stock_in_layout_v2';
 
 export default function CustomizableStockInForm({ onStockInSuccess }: { onStockInSuccess?: () => void }) {
   const { user } = useAuth();
@@ -32,8 +33,14 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
   // Layout & Form Fields State
   const [fields, setFields] = useState<FieldConfig[]>(DEFAULT_FIELDS);
   const [isCustomizing, setIsCustomizing] = useState(false);
+  const [showAddCustomModal, setShowAddCustomModal] = useState(false);
+
+  // New Custom Field Modal Form
+  const [newFieldLabel, setNewFieldLabel] = useState("");
+  const [newFieldType, setNewFieldType] = useState<'text' | 'number' | 'textarea'>("text");
+  const [newFieldPlaceholder, setNewFieldPlaceholder] = useState("");
   
-  // Data Options State
+  // Master Data Options State
   const [products, setProducts] = useState<any[]>([]);
   const [locations, setLocations] = useState<any[]>([]);
   const [suppliers, setSuppliers] = useState<any[]>([]);
@@ -69,7 +76,7 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
           const def = DEFAULT_FIELDS.find(d => d.id === f.id);
           return def ? { ...def, visible: def.required ? true : f.visible } : f;
         });
-        // Add any missing default fields
+        // Add any custom or missing fields
         DEFAULT_FIELDS.forEach(def => {
           if (!merged.some(m => m.id === def.id)) merged.push(def);
         });
@@ -149,12 +156,50 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
   const toggleVisibility = (id: string) => {
     const copy = fields.map(f => {
       if (f.id === id) {
-        if (f.required) return f; // Cannot hide required fields
+        if (f.required) return f;
         return { ...f, visible: !f.visible };
       }
       return f;
     });
     saveLayoutPreferences(copy);
+  };
+
+  // Add Custom Field Handler
+  const handleAddCustomField = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newFieldLabel.trim()) return;
+
+    const customId = `custom_${Date.now()}_${newFieldLabel.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+    const newField: FieldConfig = {
+      id: customId,
+      label: newFieldLabel.trim(),
+      required: false,
+      visible: true,
+      type: newFieldType,
+      placeholder: newFieldPlaceholder.trim() || `Enter ${newFieldLabel.trim()}`,
+      isCustom: true,
+    };
+
+    const updated = [...fields, newField];
+    saveLayoutPreferences(updated);
+    setShowAddCustomModal(false);
+    setNewFieldLabel("");
+    setNewFieldPlaceholder("");
+    setNewFieldType("text");
+    setFeedback({ type: 'success', msg: `Custom field "${newField.label}" added to Stock In form!` });
+  };
+
+  // Remove / Delete Custom Field Handler
+  const handleRemoveField = (id: string) => {
+    const fieldToRemove = fields.find(f => f.id === id);
+    if (!fieldToRemove) return;
+    if (fieldToRemove.required) {
+      setFeedback({ type: 'error', msg: "Cannot remove required system fields." });
+      return;
+    }
+    const updated = fields.filter(f => f.id !== id);
+    saveLayoutPreferences(updated);
+    setFeedback({ type: 'success', msg: `Field "${fieldToRemove.label}" removed from Stock In form.` });
   };
 
   // Reset to Default Form Layout
@@ -179,6 +224,14 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
     setIsSubmitting(true);
     setFeedback(null);
 
+    // Aggregate Custom Field Values into Transaction Notes
+    const customSummary = fields
+      .filter(f => f.isCustom && f.visible && formData[f.id])
+      .map(f => `${f.label}: ${formData[f.id]}`)
+      .join(' | ');
+
+    const combinedNotes = [formData.notes, customSummary].filter(Boolean).join(' | ');
+
     try {
       const res = await fetch('/api/wms/stock-in', {
         method: 'POST',
@@ -192,7 +245,7 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
           quantity: Number(formData.quantity),
           sourceDestination: formData.supplier,
           referenceNo: formData.referenceNo,
-          notes: formData.notes,
+          notes: combinedNotes,
           warehouse: formData.warehouse,
           location: formData.location,
           unitPrice: formData.unitCost !== '' ? Number(formData.unitCost) : undefined,
@@ -224,11 +277,21 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
             <ArrowDownLeft className="w-5 h-5 text-[#16A34A]" /> Customizable Stock In Form
           </h3>
           <p className="text-xs text-[#64748B] mt-0.5">
-            Arrange and customize your inbound receiving fields using drag & drop or accessible controls.
+            Arrange, add custom fields, or toggle optional fields for your inbound receiving workflow.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {isCustomizing && (
+            <button
+              type="button"
+              onClick={() => setShowAddCustomModal(true)}
+              className="px-3.5 py-2 bg-[#16A34A] hover:bg-[#12823a] text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+            >
+              <Plus className="w-4 h-4" /> Add Custom Field
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => setIsCustomizing(!isCustomizing)}
@@ -272,11 +335,11 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
       {/* Layout Customization Drawer / Manager */}
       {isCustomizing && (
         <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#0077C8]/30 space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <span className="text-xs font-extrabold text-[#0077C8] uppercase tracking-wider flex items-center gap-1.5">
-              <GripVertical className="w-4 h-4" /> Drag & Drop / Toggle Form Fields
+              <Sliders className="w-4 h-4" /> Form Layout & Custom Field Manager
             </span>
-            <span className="text-[11px] text-[#64748B]">Drag rows to reorder • Use Eye to show/hide optional fields</span>
+            <span className="text-[11px] text-[#64748B]">Drag rows • Use Eye to show/hide • Trash to remove custom fields</span>
           </div>
 
           <div className="space-y-2">
@@ -298,6 +361,10 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
                   {field.required ? (
                     <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-[#0077C8]/10 text-[#0077C8]">
                       Required
+                    </span>
+                  ) : field.isCustom ? (
+                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-[#16A34A]/10 text-[#16A34A]">
+                      Custom Field
                     </span>
                   ) : (
                     <span className="text-[10px] font-semibold text-[#64748B]">Optional</span>
@@ -331,16 +398,38 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
                       type="button"
                       onClick={() => toggleVisibility(field.id)}
                       title={field.visible ? 'Hide Field' : 'Show Field'}
-                      className={`p-1.5 rounded transition-all ml-2 ${
+                      className={`p-1.5 rounded transition-all ml-1 ${
                         field.visible ? 'bg-[#16A34A]/10 text-[#16A34A]' : 'bg-slate-100 text-slate-400'
                       }`}
                     >
                       {field.visible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
                   )}
+
+                  {/* Remove / Delete Field */}
+                  {!field.required && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveField(field.id)}
+                      title="Remove Field"
+                      className="p-1.5 rounded bg-red-50 text-red-600 hover:bg-red-100 transition-all ml-1"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="pt-2 flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShowAddCustomModal(true)}
+              className="px-3.5 py-2 bg-[#16A34A] hover:bg-[#12823a] text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+            >
+              <Plus className="w-4 h-4" /> Add Custom Field to Form
+            </button>
           </div>
         </div>
       )}
@@ -381,7 +470,7 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
                     min={field.id === 'quantity' ? '1' : '0'}
                     step={field.id === 'unitCost' ? '0.01' : '1'}
                     placeholder={field.placeholder}
-                    value={formData[field.id]}
+                    value={formData[field.id] || ''}
                     onChange={e => handleChange(field.id, e.target.value)}
                     required={field.required}
                     className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
@@ -459,7 +548,7 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
                   <label className="block font-bold text-[#0F172A] mb-1">{field.label}</label>
                   <textarea
                     placeholder={field.placeholder}
-                    value={formData[field.id]}
+                    value={formData[field.id] || ''}
                     onChange={e => handleChange(field.id, e.target.value)}
                     className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8] h-20"
                   />
@@ -473,7 +562,7 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
                 <input
                   type="text"
                   placeholder={field.placeholder}
-                  value={formData[field.id]}
+                  value={formData[field.id] || ''}
                   onChange={e => handleChange(field.id, e.target.value)}
                   className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
                 />
@@ -491,6 +580,95 @@ export default function CustomizableStockInForm({ onStockInSuccess }: { onStockI
           </button>
         </div>
       </form>
+
+      {/* Add Custom Field Modal */}
+      {showAddCustomModal && (
+        <div className="fixed inset-0 z-50 bg-[#0F172A]/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 max-w-md w-full text-left space-y-4 relative shadow-2xl">
+            <button onClick={() => setShowAddCustomModal(false)} className="absolute top-4 right-4 text-[#64748B] hover:text-[#0F172A]">
+              <X className="w-5 h-5" />
+            </button>
+            
+            <h3 className="text-base font-extrabold text-[#0F172A] uppercase flex items-center gap-2">
+              <Plus className="w-4 h-4 text-[#16A34A]" /> Create Custom Field for Stock In
+            </h3>
+
+            <form onSubmit={handleAddCustomField} className="space-y-3 text-xs">
+              <div>
+                <label className="block font-bold text-[#0F172A] mb-1">Field Label / Title</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Driver Name, Gate Pass #, Temp (°C)"
+                  value={newFieldLabel}
+                  onChange={e => setNewFieldLabel(e.target.value)}
+                  className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-[#0F172A] mb-1">Field Input Type</label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setNewFieldType('text')}
+                    className={`p-2.5 rounded-lg border font-bold text-center flex flex-col items-center gap-1 ${
+                      newFieldType === 'text' ? 'bg-[#0077C8] text-white border-[#0077C8]' : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0]'
+                    }`}
+                  >
+                    <Type className="w-4 h-4" /> Text Input
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewFieldType('number')}
+                    className={`p-2.5 rounded-lg border font-bold text-center flex flex-col items-center gap-1 ${
+                      newFieldType === 'number' ? 'bg-[#0077C8] text-white border-[#0077C8]' : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0]'
+                    }`}
+                  >
+                    <Hash className="w-4 h-4" /> Number
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewFieldType('textarea')}
+                    className={`p-2.5 rounded-lg border font-bold text-center flex flex-col items-center gap-1 ${
+                      newFieldType === 'textarea' ? 'bg-[#0077C8] text-white border-[#0077C8]' : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0]'
+                    }`}
+                  >
+                    <AlignLeft className="w-4 h-4" /> Multi-Line Text
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-[#0F172A] mb-1">Placeholder Text (Optional)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Enter details..."
+                  value={newFieldPlaceholder}
+                  onChange={e => setNewFieldPlaceholder(e.target.value)}
+                  className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                />
+              </div>
+
+              <div className="pt-2 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddCustomModal(false)}
+                  className="px-4 py-2 rounded bg-slate-100 font-bold uppercase text-[10px] hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded bg-[#16A34A] hover:bg-[#12823a] text-white font-bold uppercase text-[10px] shadow-sm"
+                >
+                  Add Custom Field
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
