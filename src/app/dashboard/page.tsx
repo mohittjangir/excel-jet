@@ -595,8 +595,8 @@ function DashboardContent() {
     <AnimatePresence>
       <div className="relative flex h-screen bg-[#F8FAFC] text-[#0F172A] font-sans overflow-hidden">
         {/* Sidebar - Excel Jet Deep Dark #0F172A */}
-        <aside className="w-64 bg-[#0F172A] border-r border-[#0077C8]/30 flex flex-col p-5 hidden md:flex sticky top-0 h-screen z-50 text-white shadow-lg">
-          <Link href="/" className="flex items-center gap-3 py-2 px-1 mb-8">
+        <aside className="w-64 shrink-0 bg-[#0F172A] border-r border-[#0077C8]/30 flex flex-col p-5 hidden md:flex sticky top-0 h-screen z-50 text-white shadow-lg overflow-hidden">
+          <Link href="/" className="flex items-center gap-3 py-2 px-1 mb-8 shrink-0">
             <WMSLogo variant="light" size="md" />
           </Link>
 

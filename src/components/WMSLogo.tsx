@@ -41,7 +41,7 @@ export default function WMSLogo({ variant = "dark", size = "md", showSubtitle = 
           </span>
         </div>
         {showSubtitle && (
-          <span className={`text-[8px] font-extrabold uppercase tracking-widest mt-1 ${isLight ? 'text-slate-300' : 'text-[#475569]'}`}>
+          <span className={`text-[7.5px] font-extrabold uppercase tracking-wider mt-0.5 whitespace-nowrap ${isLight ? 'text-slate-300' : 'text-[#475569]'}`}>
             Warehouse Management System
           </span>
         )}
