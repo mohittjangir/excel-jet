@@ -89,6 +89,11 @@ function DashboardContent() {
   const [sourceDestination, setSourceDestination] = useState("");
   const [referenceNo, setReferenceNo] = useState("");
   const [actionNotes, setActionNotes] = useState("");
+  const [receivingWarehouse, setReceivingWarehouse] = useState("Central Metro Distribution Hub");
+  const [receivingLocation, setReceivingLocation] = useState("Zone A - Aisle 01");
+  const [unitCost, setUnitCost] = useState<number | "">(0);
+  const [availableLocations, setAvailableLocations] = useState<any[]>([]);
+  const [availableSuppliers, setAvailableSuppliers] = useState<any[]>([]);
   
   // Product Form Fields
   const [prodName, setProdName] = useState("");
@@ -123,6 +128,8 @@ function DashboardContent() {
 
   useEffect(() => {
     fetchProducts();
+    fetch('/api/wms/masters/locations').then(r => r.ok && r.json()).then(data => data && Array.isArray(data) && setAvailableLocations(data)).catch(() => {});
+    fetch('/api/wms/masters/suppliers').then(r => r.ok && r.json()).then(data => data && Array.isArray(data) && setAvailableSuppliers(data)).catch(() => {});
   }, []);
 
   const handleStockInSubmit = async (e: React.FormEvent) => {
@@ -145,6 +152,9 @@ function DashboardContent() {
           sourceDestination,
           referenceNo,
           notes: actionNotes,
+          warehouse: receivingWarehouse,
+          location: receivingLocation,
+          unitPrice: unitCost !== "" ? Number(unitCost) : undefined,
           user: user?.name || "Excel Jet Operator",
         }),
       });
@@ -684,27 +694,84 @@ function DashboardContent() {
                 </select>
               </div>
 
-              <div>
-                <label className="block font-bold text-[#0F172A] mb-1">Quantity Received (+)</label>
-                <input 
-                  type="number"
-                  min="1"
-                  value={actionQuantity}
-                  onChange={e => setActionQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                  required
-                  className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-[#0F172A] mb-1">Quantity Received (+)</label>
+                  <input 
+                    type="number"
+                    min="1"
+                    value={actionQuantity}
+                    onChange={e => setActionQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    required
+                    className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-[#0F172A] mb-1">Unit Cost ($)</label>
+                  <input 
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="e.g. 45.00"
+                    value={unitCost}
+                    onChange={e => setUnitCost(e.target.value === "" ? "" : parseFloat(e.target.value))}
+                    className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-[#0F172A] mb-1">Destination Warehouse</label>
+                  <select
+                    value={receivingWarehouse}
+                    onChange={e => setReceivingWarehouse(e.target.value)}
+                    className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                  >
+                    <option value="Central Metro Distribution Hub">Central Metro Hub</option>
+                    <option value="North Regional Logistics Facility">North Regional Hub</option>
+                    <option value="East Sorting Center">East Sorting Center</option>
+                    <option value="West Logistics Depot">West Logistics Depot</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-[#0F172A] mb-1">Bin / Shelf Location</label>
+                  <select
+                    value={receivingLocation}
+                    onChange={e => setReceivingLocation(e.target.value)}
+                    className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                  >
+                    <option value="Zone A - Aisle 01">Zone A - Aisle 01</option>
+                    <option value="Zone B - Aisle 04">Zone B - Aisle 04</option>
+                    <option value="Zone C - Cabinet 01">Zone C - Cabinet 01</option>
+                    <option value="Zone D - Shelf 08">Zone D - Shelf 08</option>
+                    <option value="Zone E - Bulk Receiving">Zone E - Bulk Receiving</option>
+                    {availableLocations.map((loc: any) => {
+                      const label = `${loc.zone || ''} ${loc.aisle ? `- ${loc.aisle}` : ''} ${loc.bin ? `(${loc.bin})` : ''}`.trim();
+                      return <option key={loc.id} value={label}>{label}</option>;
+                    })}
+                  </select>
+                </div>
               </div>
 
               <div>
                 <label className="block font-bold text-[#0F172A] mb-1">Supplier / Source</label>
-                <input 
-                  type="text"
-                  placeholder="e.g. Apex Industrial Supplies"
+                <select
                   value={sourceDestination}
                   onChange={e => setSourceDestination(e.target.value)}
-                  className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
-                />
+                  className="w-full p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg font-bold text-[#0F172A] focus:outline-none focus:border-[#0077C8]"
+                >
+                  <option value="">-- Select Supplier Source --</option>
+                  <option value="Apex Industrial Supplies">Apex Industrial Supplies</option>
+                  <option value="Global Packaging Co">Global Packaging Co</option>
+                  <option value="TechHardware Logistics">TechHardware Logistics</option>
+                  <option value="Fastener King Inc">Fastener King Inc</option>
+                  {availableSuppliers.map((s: any) => (
+                    <option key={s.id} value={s.name}>{s.name}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

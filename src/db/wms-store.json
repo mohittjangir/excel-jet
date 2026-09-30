@@ -164,14 +164,14 @@
       "sku": "SKU-401333",
       "name": "asd",
       "category": "Storage & Racking",
-      "quantity": 10,
+      "quantity": 11,
       "minStock": 10,
       "price": 100,
       "location": "Zone A - Aisle 01",
       "id": "prod-1790676401415",
-      "status": "Low Stock",
+      "status": "In Stock",
       "createdAt": "2026-09-29T10:06:41.415Z",
-      "updatedAt": "2026-09-29T12:21:40.216Z"
+      "updatedAt": "2026-09-29T13:20:22.944Z"
     },
     {
       "id": "prod-1",
@@ -227,6 +227,71 @@
     }
   ],
   "transactions": [
+    {
+      "id": "tx-1790688022944",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-022944",
+      "notes": "Inbound stock received",
+      "user": "Admin Manager",
+      "createdAt": "2026-09-29T13:20:22.944Z"
+    },
+    {
+      "id": "tx-1790687695008",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Customer Dispatch",
+      "referenceNo": "ORD-695008",
+      "notes": "Outbound stock dispatched",
+      "user": "Rahul Sharma",
+      "createdAt": "2026-09-29T13:14:55.008Z"
+    },
+    {
+      "id": "tx-1790687692064",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-692064",
+      "notes": "Inbound stock received",
+      "user": "Rahul Sharma",
+      "createdAt": "2026-09-29T13:14:52.064Z"
+    },
+    {
+      "id": "tx-1790687650004",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_OUT",
+      "quantity": 1,
+      "sourceDestination": "Customer Dispatch",
+      "referenceNo": "ORD-650004",
+      "notes": "Outbound stock dispatched",
+      "user": "Rahul Sharma",
+      "createdAt": "2026-09-29T13:14:10.004Z"
+    },
+    {
+      "id": "tx-1790687618222",
+      "productId": "prod-1790676401415",
+      "productName": "asd",
+      "sku": "SKU-401333",
+      "type": "STOCK_IN",
+      "quantity": 1,
+      "sourceDestination": "Supplier Receiving",
+      "referenceNo": "PO-618222",
+      "notes": "Inbound stock received",
+      "user": "Rahul Sharma",
+      "createdAt": "2026-09-29T13:13:38.222Z"
+    },
     {
       "id": "tx-1790684500216",
       "productId": "prod-1790676401415",
@@ -439,6 +504,51 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1790688022944-357",
+      "user": "Admin Manager",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T13:20:22.944Z"
+    },
+    {
+      "id": "log-1790687695008-174",
+      "user": "Rahul Sharma",
+      "role": "STAFF",
+      "action": "STOCK_OUT_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Dispatched -1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T13:14:55.008Z"
+    },
+    {
+      "id": "log-1790687692064-173",
+      "user": "Rahul Sharma",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T13:14:52.064Z"
+    },
+    {
+      "id": "log-1790687650004-775",
+      "user": "Rahul Sharma",
+      "role": "STAFF",
+      "action": "STOCK_OUT_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Dispatched -1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T13:14:10.004Z"
+    },
+    {
+      "id": "log-1790687618222-663",
+      "user": "Rahul Sharma",
+      "role": "STAFF",
+      "action": "STOCK_IN_PROCESSED",
+      "category": "INVENTORY",
+      "details": "Received +1 units for SKU: SKU-401333",
+      "createdAt": "2026-09-29T13:13:38.222Z"
+    },
     {
       "id": "log-1790684500216-913",
       "user": "Admin Manager",

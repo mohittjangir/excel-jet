@@ -454,14 +454,20 @@ export const WMSDB = {
   },
 
   // STOCK IN / RECEIVING
-  stockIn(params: { productId: string; quantity: number; sourceDestination?: string; referenceNo?: string; notes?: string; user?: string; role?: 'ADMIN' | 'STAFF' }) {
+  stockIn(params: { productId: string; quantity: number; sourceDestination?: string; referenceNo?: string; notes?: string; user?: string; role?: 'ADMIN' | 'STAFF'; warehouse?: string; location?: string; unitPrice?: number }) {
     const data = readStore();
     const product = data.products.find(p => p.id === params.productId);
     if (!product) throw new Error("Product not found");
 
     product.quantity += params.quantity;
+    if (params.warehouse) product.warehouse = params.warehouse;
+    if (params.location) product.location = params.location;
+    if (params.unitPrice !== undefined && params.unitPrice >= 0) product.price = params.unitPrice;
     product.status = calculateStatus(product.quantity, product.minStock);
     product.updatedAt = new Date().toISOString();
+
+    const locationDetails = [params.warehouse, params.location].filter(Boolean).join(' - ');
+    const notesWithDetails = [params.notes, locationDetails ? `Loc: ${locationDetails}` : '', params.unitPrice !== undefined ? `Unit Cost: $${params.unitPrice}` : ''].filter(Boolean).join(' | ');
 
     const tx: StockTransaction = {
       id: `tx-${Date.now()}`,
@@ -472,13 +478,13 @@ export const WMSDB = {
       quantity: params.quantity,
       sourceDestination: params.sourceDestination || 'Supplier Receiving',
       referenceNo: params.referenceNo || `PO-${Date.now().toString().slice(-6)}`,
-      notes: params.notes || 'Inbound stock received',
+      notes: notesWithDetails || 'Inbound stock received',
       user: params.user || 'Operator',
       createdAt: new Date().toISOString(),
     };
 
     data.transactions.unshift(tx);
-    addAudit(data, params.user || 'Operator', params.role || 'STAFF', 'STOCK_IN_PROCESSED', 'INVENTORY', `Received +${params.quantity} units for SKU: ${product.sku}`);
+    addAudit(data, params.user || 'Operator', params.role || 'STAFF', 'STOCK_IN_PROCESSED', 'INVENTORY', `Received +${params.quantity} units for SKU: ${product.sku} (Location: ${product.location || 'Default'}, Price: $${product.price})`);
     writeStore(data);
     return { product, transaction: tx };
   },

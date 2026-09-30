@@ -20,6 +20,9 @@ export async function POST(request: NextRequest) {
       referenceNo: body.referenceNo,
       notes: body.notes,
       user: body.user,
+      warehouse: body.warehouse,
+      location: body.location,
+      unitPrice: body.unitPrice !== undefined ? Number(body.unitPrice) : undefined,
     });
 
     return NextResponse.json(result, { status: 201 });
