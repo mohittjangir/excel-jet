@@ -151,7 +151,9 @@ interface WMSStoreData {
   cartons: Carton[];
 }
 
-const DB_FILE = path.join(process.cwd(), 'src', 'db', 'wms-store.json');
+const DB_FILE = process.env.VERCEL || process.env.NODE_ENV === 'production'
+  ? path.join('/tmp', 'wms-store.json')
+  : path.join(process.cwd(), 'src', 'db', 'wms-store.json');
 
 const INITIAL_DATA: WMSStoreData = {
   categories: [
