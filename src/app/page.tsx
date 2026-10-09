@@ -14,6 +14,9 @@ import Footer from "@/components/Footer";
 import UserInfo from "@/components/UserInfo";
 import WMSLogo from "@/components/WMSLogo";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 const NAV_ITEMS = [
   { name: "Features", href: "#features" },
   { name: "Inventory", href: "#solutions" },
@@ -21,12 +24,19 @@ const NAV_ITEMS = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   const { user } = useAuth();
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false
   );
+
+  useEffect(() => {
+    if (mounted && user) {
+      router.replace("/dashboard");
+    }
+  }, [user, mounted, router]);
 
   const handleSmoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
     if (href.startsWith("#") && href.length > 1) {

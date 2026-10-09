@@ -5,7 +5,10 @@ import { useAuth } from "@/context/AuthContext";
 import { Eye, EyeOff, X, KeyRound, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useRouter } from "next/navigation";
+
 export default function SimpleLoginModal() {
+  const router = useRouter();
   const { isLoginModalOpen, closeLoginModal, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +26,7 @@ export default function SimpleLoginModal() {
     } else {
       setEmail("");
       setPassword("");
+      router.push("/dashboard");
     }
   };
 

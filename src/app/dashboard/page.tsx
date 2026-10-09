@@ -30,11 +30,13 @@ import MastersModule from "@/components/dashboard/MastersModule";
 import InventoryModule from "@/components/dashboard/InventoryModule";
 import ReportsModule from "@/components/dashboard/ReportsModule";
 import AdministrationModule from "@/components/dashboard/AdministrationModule";
+import AboutModule from "@/components/dashboard/AboutModule";
 import UserInfo from "@/components/UserInfo";
 import WMSLogo from "@/components/WMSLogo";
 import { useAuth } from "@/context/AuthContext";
+import { Info } from "lucide-react";
 
-type TabType = 'overview' | 'masters' | 'inventory' | 'reports' | 'admin' | 'production' | 'growth';
+type TabType = 'overview' | 'masters' | 'inventory' | 'reports' | 'admin' | 'production' | 'growth' | 'about';
 
 function DashboardContent() {
   const { user } = useAuth();
@@ -48,6 +50,7 @@ function DashboardContent() {
       { id: 'masters', label: 'WMS Data Masters', icon: Boxes },
       { id: 'inventory', label: 'Inventory & Adjustments', icon: ClipboardList },
       { id: 'reports', label: 'WMS Reports', icon: FileText },
+      { id: 'about', label: 'About WMS', icon: Info },
       ...(isAdmin ? [
         { id: 'admin', label: 'System Admin & User Roles', icon: Shield },
         { id: 'growth', label: 'Growth & Analytics', icon: BarChart3 },
@@ -584,6 +587,12 @@ function DashboardContent() {
           <motion.div key="production" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
             <ContentCalendar />
             <BRollSuggester />
+          </motion.div>
+        );
+      case 'about':
+        return (
+          <motion.div key="about" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+            <AboutModule />
           </motion.div>
         );
       default:
