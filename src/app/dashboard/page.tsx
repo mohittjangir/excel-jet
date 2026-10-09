@@ -31,12 +31,14 @@ import InventoryModule from "@/components/dashboard/InventoryModule";
 import ReportsModule from "@/components/dashboard/ReportsModule";
 import AdministrationModule from "@/components/dashboard/AdministrationModule";
 import AboutModule from "@/components/dashboard/AboutModule";
+import StockOutModule from "@/components/dashboard/StockOutModule";
+import CustomizableStockInForm from "@/components/dashboard/CustomizableStockInForm";
 import UserInfo from "@/components/UserInfo";
 import WMSLogo from "@/components/WMSLogo";
 import { useAuth } from "@/context/AuthContext";
 import { Info } from "lucide-react";
 
-type TabType = 'overview' | 'masters' | 'inventory' | 'reports' | 'admin' | 'production' | 'growth' | 'about';
+type TabType = 'overview' | 'stock-in' | 'stock-out' | 'masters' | 'inventory' | 'reports' | 'admin' | 'production' | 'growth' | 'about';
 
 function DashboardContent() {
   const { user } = useAuth();
@@ -47,6 +49,8 @@ function DashboardContent() {
   const visibleTabs = useMemo(() => {
     return [
       { id: 'overview', label: isAdmin ? 'Executive Overview' : 'Floor Operations', icon: LayoutDashboard },
+      { id: 'stock-in', label: 'Stock In (+)', icon: ArrowDownLeft },
+      { id: 'stock-out', label: 'Stock Out (-)', icon: ArrowUpRight },
       { id: 'masters', label: 'WMS Data Masters', icon: Boxes },
       { id: 'inventory', label: 'Inventory & Adjustments', icon: ClipboardList },
       { id: 'reports', label: 'WMS Reports', icon: FileText },
@@ -587,6 +591,18 @@ function DashboardContent() {
           <motion.div key="production" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
             <ContentCalendar />
             <BRollSuggester />
+          </motion.div>
+        );
+      case 'stock-in':
+        return (
+          <motion.div key="stock-in" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+            <CustomizableStockInForm onStockInSuccess={fetchProducts} />
+          </motion.div>
+        );
+      case 'stock-out':
+        return (
+          <motion.div key="stock-out" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+            <StockOutModule onStockOutSuccess={fetchProducts} />
           </motion.div>
         );
       case 'about':
