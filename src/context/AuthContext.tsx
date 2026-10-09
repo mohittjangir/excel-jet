@@ -11,7 +11,7 @@ export interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, pass: string) => { success: boolean; error?: string };
+  login: (email: string, pass: string, selectedRole?: "ADMIN" | "STAFF") => { success: boolean; error?: string };
   logout: () => void;
   isLoginModalOpen: boolean;
   openLoginModal: () => void;
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  const login = (email: string, pass: string) => {
+  const login = (email: string, pass: string, selectedRole?: "ADMIN" | "STAFF") => {
     const trimmedEmail = email.trim().toLowerCase();
     const preset = PRESET_USERS[trimmedEmail];
 
@@ -70,11 +70,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!trimmedEmail || !pass) {
         return { success: false, error: "Please provide both email and password." };
       }
+      const inferredRole: "ADMIN" | "STAFF" = trimmedEmail.includes("admin") ? "ADMIN" : "STAFF";
       loggedInUser = {
         id: `u-${Date.now()}`,
         name: trimmedEmail.split("@")[0].toUpperCase(),
         email: trimmedEmail,
-        role: trimmedEmail.includes("admin") ? "ADMIN" : "STAFF"
+        role: selectedRole || inferredRole
+      };
+    }
+
+    if (selectedRole && loggedInUser.role !== selectedRole) {
+      return {
+        success: false,
+        error: "Your account does not have permission to log in with this role."
       };
     }
 
